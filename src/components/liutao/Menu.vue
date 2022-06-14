@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div id="app">
     <v-header></v-header>
     <v-side></v-side>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -12,11 +13,12 @@ export default {
   name: 'Menu',
   components: {
     'v-header': Header,
-    'v-side': Side
-  }
+    'v-side': Side,
+  },
 }
 </script>
 
 <style scoped>
-
+#app{
+}
 </style>
