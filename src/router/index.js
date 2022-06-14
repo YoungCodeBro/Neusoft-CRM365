@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Start from '../components/start/Start.vue'
 import NavButton from '../components/nav/NavButton.vue'
+import Menu from '../components/liutao/Menu'
 
 Vue.use(Router)
 

@@ -1,16 +1,10 @@
 <template>
   <div>
-    <van-row gutter="20">
-      <van-col span="8">
-        <span>热销榜</span>
-      </van-col>
-      <van-col span="8">
-        <span>点过的菜</span>
-      </van-col>
-      <van-col span="8">
-        <span>猜你喜欢</span>
-      </van-col>
-    </van-row>
+    <van-grid :column-num="3" :gutter="10" icon-size="50px">
+      <van-grid-item icon="hot-o" text="热销榜"  />
+      <van-grid-item icon="records" text="点过的菜"  />
+      <van-grid-item icon="search" text="猜你喜欢"  />
+    </van-grid>
   </div>
 </template>
 
