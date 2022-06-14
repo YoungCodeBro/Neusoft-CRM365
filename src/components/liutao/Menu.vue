@@ -1,25 +1,24 @@
 <template>
-  <div>
+  <div id="app">
     <v-header></v-header>
     <v-side></v-side>
-    <v-main></v-main>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Header from './Header'
 import Side from './Side'
-import Main from './Main'
 export default {
   name: 'Menu',
   components: {
     'v-header': Header,
     'v-side': Side,
-    'v-main': Main
-  }
+  },
 }
 </script>
 
 <style scoped>
-
+#app{
+}
 </style>

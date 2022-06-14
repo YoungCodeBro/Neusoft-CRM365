@@ -5,7 +5,10 @@ import Start from '../components/start/Start.vue'
 import NavButton from '../components/nav/NavButton.vue'
 import Detail from '../components/Detail Info/Detail.vue'
 import Menu from '../components/liutao/Menu'
-
+import OrderFood from '../components/liutao/OrderFood'
+import HotFood from '../components/liutao/HotFood'
+import Ordered from '../components/liutao/Ordered'
+import Like from '../components/liutao/Like'
 Vue.use(Router)
 
 export default new Router({
@@ -30,5 +33,32 @@ export default new Router({
       name: 'Detail',
       component: Detail
     },
+    {
+      path: '/menu',
+      name: 'Menu',
+      component: Menu,
+      children: [
+        {
+          path: '/',
+          name: 'orderFood',
+          component: OrderFood,
+        },
+        {
+          path: '/menu/hot',
+          name: 'hotFood',
+          component: HotFood,
+        },
+        {
+          path: '/menu/ordered',
+          name: 'ordered',
+          component: Ordered,
+        },
+        {
+          path: '/menu/like',
+          name: 'like',
+          component: Like,
+        },
+      ]
+    }
   ]
 })
