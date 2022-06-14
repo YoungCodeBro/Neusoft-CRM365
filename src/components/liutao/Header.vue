@@ -24,12 +24,8 @@
 export default {
   name: 'Header',
   methods:{
-    alertOut(msg){
-      console.log(msg);
-    },
     movePage(path){
       let nav = document.getElementById('navBut').innerHTML = '返回';
-      console.log(nav);
       this.$router.push(path);
     }
   }
