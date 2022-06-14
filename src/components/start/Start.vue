@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">
-      <img src="../../assets/image/canju.png" alt="用餐图标" />
+      <img src="../../assets/Image/canju.png" alt="用餐图标" />
       <h3>用餐人数</h3>
     </div>
     <p>请选择正确的用餐人数，小二马上给你送餐具</p>
@@ -15,6 +15,7 @@
             :id="'pc' + num"
             :value="num"
             v-model="mealPersonNum"
+            required
           />
           <label :for="'pc' + num"> {{ num }}人 </label>
         </div>
@@ -36,7 +37,13 @@ export default {
   },
   methods: {
     startOrder() {
-      this.$router.push("/home");
+      //检查用餐人数是否正确
+      if (this.mealPersonNum != 0) {
+        // 跳转到主页面
+        this.$router.push("/home");
+      } else {
+        alert("请选择用餐人数！");
+      }
     },
   },
 };
@@ -92,7 +99,7 @@ p {
   width: 100%;
 }
 button {
-  margin: 70px auto;
+  margin: 150px auto;
   display: block;
   width: 70px;
   height: 70px;

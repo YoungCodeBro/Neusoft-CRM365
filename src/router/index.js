@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Start from '../components/start/Start.vue'
 import NavButton from '../components/nav/NavButton.vue'
+import Detail from '../components/Detail Info/Detail.vue'
 import Menu from '../components/liutao/Menu'
 
 Vue.use(Router)
@@ -23,6 +24,11 @@ export default new Router({
       path: '/nav',
       name: 'Nav',
       component: NavButton
-    }
+    },
+    {
+      path: '/detail/:fid',
+      name: 'Detail',
+      component: Detail
+    },
   ]
 })
