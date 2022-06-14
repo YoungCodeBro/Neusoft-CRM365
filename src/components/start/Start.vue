@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">
-      <img src="../../assets/素材图片/canju.png" alt="用餐图标" />
+      <img src="../../assets/image/canju.png" alt="用餐图标" />
       <h3>用餐人数</h3>
     </div>
     <p>请选择正确的用餐人数，小二马上给你送餐具</p>
