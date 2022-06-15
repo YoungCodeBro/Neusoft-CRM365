@@ -3,7 +3,7 @@
     <!--头部-->
     <div class="a-header">
       <div class="a-header0ne">
-        <img src="../../assets/image/timer.png" />
+        <img src="../../assets/Image/timer.png" />
       </div>
       <div class="a-headertwo">
         <p class="P-text1">118号桌待门店接单</p>
@@ -78,18 +78,17 @@ body {
 }
 .a-headerOne {
   position: absolute;
-
-  left: 30px;
+  left: 2rem;
 }
 .a-header0ne img {
   position: absolute;
   top: 0.8rem;
-  left: 1.5rem;
+  left: 1.3rem;
 }
 .a-headertwo {
   flex: 1;
   position: absolute;
-  right: 100px;
+  right: 70px;
   top: 10px;
 }
 .P-text1 {
@@ -128,13 +127,13 @@ body {
 .textDivSmallTwo {
   display: flex;
   padding-top: 1rem;
-  padding-left: 14rem;
+  padding-left: 11rem;
   font-size: 1rem;
   height: 2.5rem;
   text-align: center;
 }
 .textDivSmallThree {
-  padding-left: 3rem;
+  padding-left: 3.8rem;
   font-size: 1rem;
   height: 2.5rem;
   text-align: center;

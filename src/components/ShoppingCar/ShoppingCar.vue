@@ -10,7 +10,7 @@
             <p class="ClassP">备注:无</p>
           </div>
           <div class="number-right">
-            <img src="../../assets/image/edit.png" alt="" />
+            <img src="../../assets/Image/edit.png" alt="" />
             <p>修改</p>
           </div>
         </div>
@@ -34,7 +34,7 @@
               <p>$:{{ item.price }}</p>
             </div>
             <div class="list-button">
-              <div>
+              <!-- <div>
                 <button class="libu" @click="Add">+</button>
               </div>
               <div>
@@ -42,7 +42,8 @@
               </div>
               <div>
                 <button class="libu" @click="decline">-</button>
-              </div>
+              </div> -->
+              <v-stepper :value="1"></v-stepper>
             </div>
           </li>
         </ul>
@@ -68,31 +69,38 @@
 </template>
 
 <script>
+import Stepper from '../Detail Info/Stepper.vue'
 export default {
   name: "App",
   data() {
     return {
+      sum:0,
+
+
       list: [
         {
-          img: require("../../assets/image/1.jpg"),
+          img: require("../../assets/Image/1.jpg"),
           name: "小米粥",
           price: 5,
           num:1,
         },
         {
-          img: require("../../assets/image/2.jpg"),
+          img: require("../../assets/Image/2.jpg"),
           name: "白菜",
           price: 5,
           num:1,
         },
         {
-          img: require("../../assets/image/3.jpg"),
+          img: require("../../assets/Image/3.jpg"),
           name: "水白菜",
           price: 5,
           num:1,
         },
       ],
     };
+  },
+  components: {
+    'v-stepper':Stepper
   },
   methods: {
     Add: function () {
@@ -176,7 +184,8 @@ export default {
   width: 100%;
   border-bottom: 0.3rem solid #eee;
   padding: 1rem 0px;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 .list-item img {
   padding: 5px;
@@ -190,17 +199,18 @@ export default {
   padding-top: 1rem;
   font-size: 1.3rem;
   font-weight: 400;
-  padding-right: 15rem;
+  //padding-right: 15rem;
+  padding-bottom: 1.5em;
 }
-.list-button {
-  position: absolute;
-  top: 3.3rem;
-  position: absolute;
-  left: 18rem;
-  display: flex;
-  border: 2px solid #555;
-  //border-left: 4px solid #555;
-}
+// .list-button {
+//   position: absolute;
+//   top: 3.3rem;
+//   position: absolute;
+//   left: 18rem;
+//   display: flex;
+//   border: 2px solid #555;
+//   //border-left: 4px solid #555;
+// }
 .list-button div p {
   padding-top: 0.7em;
   width: 2em;
@@ -229,12 +239,12 @@ export default {
 .divOne p {
   text-align: center;
 }
-.a-food h3 {
-  padding-right: 1.3rem;
-}
+// .a-food h3 {
+//   padding-right: 1.4rem;
+// }
 
 .h3div {
   font-size: 1rem;
-  padding-left: 1rem;
+  padding-left: 0.4rem;
 }
 </style>
