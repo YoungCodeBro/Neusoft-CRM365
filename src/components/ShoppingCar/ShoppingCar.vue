@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div style="position:relative">
       <!--购物车信息部分-->
       <div class="a-info">
         <h2>购物车</h2>
@@ -14,10 +14,10 @@
             <p>修改</p>
           </div>
         </div>
-        <div style="position: relative; height: 60px">
+        <div style="position: relative; height: 50px">
           <p class="in-num-price">购物车总共有6个菜</p>
           <p class="price">
-            合计:<span style="color: red; font-size: 30px">￥:58</span>
+            合计:<span style="color: red; font-size: 25px">￥:58</span>
           </p>
         </div>
       </div>
@@ -34,15 +34,6 @@
               <p>$:{{ item.price }}</p>
             </div>
             <div class="list-button">
-              <!-- <div>
-                <button class="libu" @click="Add">+</button>
-              </div>
-              <div>
-                <p style="color: red">{{item.num}}</p>
-              </div>
-              <div>
-                <button class="libu" @click="decline">-</button>
-              </div> -->
               <v-stepper :value="1"></v-stepper>
             </div>
           </li>
@@ -64,12 +55,16 @@
           </li>
         </ul>
       </div>
+      <!-- <div class="ButtonC">
+        <v-orderButton></v-orderButton>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
 import Stepper from '../Detail Info/Stepper.vue'
+import orderButton from '../ShoppingCar/orderButton.vue'
 export default {
   name: "App",
   data() {
@@ -100,7 +95,8 @@ export default {
     };
   },
   components: {
-    'v-stepper':Stepper
+    'v-stepper':Stepper,
+    'v-orderButton':orderButton
   },
   methods: {
     Add: function () {
@@ -120,7 +116,7 @@ export default {
   list-style: none;
 }
 #app {
-  padding: 0.4rem;
+  padding: 0.4rem auto;
   //font-size: 15px;
   line-height: 1.5rem;
   font-family: "宋体";
@@ -134,21 +130,21 @@ export default {
 }
 .a-info h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 0.8rem 0px;
   border-bottom: 3px solid #eee;
 }
 .in-number {
   display: flex;
   padding: 0.5rem 0;
-  height: 6rem;
+  height: 5rem;
   border-bottom: 3px solid #eee;
 }
 .number-left {
   position: relative;
   flex: 1;
   padding: 1rem 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 .ClassP {
@@ -159,12 +155,20 @@ export default {
   line-height: 2rem;
 }
 .number-right {
-  width: 8rem;
-  height: 8rem;
+  position: relative;
+  width: 6rem;
+  height: 6rem;
   text-align: center;
 }
+.number-right p{
+  
+  position: absolute;
+  right: 2.2rem;
+  bottom: 1rem;
+  font-size: 1rem;
+}
 .in-num-price {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .price {
   position: absolute;
@@ -182,6 +186,7 @@ export default {
   position: relative;
   display: flex;
   width: 100%;
+  height: 4rem;
   border-bottom: 0.3rem solid #eee;
   padding: 1rem 0px;
   justify-content: center;
@@ -189,28 +194,19 @@ export default {
 }
 .list-item img {
   padding: 5px;
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 0.8rem;
   margin-right: 1rem;
 }
 .list-item-text {
   width: 6.7rem;
   padding-top: 1rem;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 400;
   //padding-right: 15rem;
   padding-bottom: 1.5em;
 }
-// .list-button {
-//   position: absolute;
-//   top: 3.3rem;
-//   position: absolute;
-//   left: 18rem;
-//   display: flex;
-//   border: 2px solid #555;
-//   //border-left: 4px solid #555;
-// }
 .list-button div p {
   padding-top: 0.7em;
   width: 2em;
@@ -228,23 +224,28 @@ export default {
   background: grey;
 }
 /*推荐菜*/
+.a-food{
+  width: 92%;
+}
 .ulONE {
   top: 2.3rem;
   display: flex;
   justify-content: space-around;
 }
 .divOne img {
+    width: 6.5rem;
+  height: 6.5rem;
   border-radius: 0.5rem;
 }
 .divOne p {
   text-align: center;
 }
-// .a-food h3 {
-//   padding-right: 1.4rem;
-// }
-
 .h3div {
-  font-size: 1rem;
-  padding-left: 0.4rem;
+  font-size: 0.85rem;
+  padding-left: 0.5rem;
+}
+.ButtonC{
+position: absolute;
+right: 2rem;
 }
 </style>

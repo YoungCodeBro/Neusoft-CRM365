@@ -12,6 +12,8 @@ import OrderFood from '../components/liutao/OrderFood'
 import HotFood from '../components/liutao/HotFood'
 import Ordered from '../components/liutao/Ordered'
 import Like from '../components/liutao/Like'
+import orderButton from '../components/ShoppingCar/orderButton.vue'
+import Corder from '../components/ShoppingCar/Corder.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +53,17 @@ export default new Router({
       name: 'Detail',
       component: Detail
     },
+    {
+      path: '/orderButton',
+      name: 'orderButton',
+      component: orderButton
+    },
+    {
+      path: '/Corder',
+      name: 'Corder',
+      component: Corder
+    },
+
     {
       path: '/menu',
       name: 'Menu',
