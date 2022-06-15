@@ -15,15 +15,6 @@ export default {
   props: {
     value: Number,
   },
-  // data() {
-  //   return {
-  //     num: this.value,
-  //   };
-  // },
-  mounted() {
-    console.log("进步器num:" + this.num);
-    // document.querySelector("input").value=this.num;
-  },
   computed: {
     //控制加减号禁用
     left() {

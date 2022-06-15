@@ -32,12 +32,23 @@
         </ul>
       </div>
     </div>
+       <v-NavButton></v-NavButton>
+<!-- <v-CorderR></v-CorderR> -->
+<v-button :text="'继续点菜'" :icon="require('../../assets/Image/book.png')"></v-button>
   </div>
 </template>
 
 <script>
+import CorderR from '../ShoppingCar/CorderR.vue'
+import NavButton from "../nav/NavButton.vue";
+import Button from '../nav/Button.vue'
 export default {
   name: "App",
+  components:{
+     "v-NavButton": NavButton,
+    'v-CorderR':CorderR,
+    'v-button': Button
+  },
   data() {
     return {
       sumMoney: 12,
@@ -52,7 +63,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="css" scoped>
 * {
   margin: 0;
   padding: 0;
@@ -104,7 +115,6 @@ body {
   height: 20px;
   background: rgb(240, 240, 240);
 }
-//////////
 #DetailDiv {
   border-bottom: 2px solid #eee;
   font-family: "宋体";
@@ -137,6 +147,11 @@ body {
   font-size: 1rem;
   height: 2.5rem;
   text-align: center;
+}
+.btn {
+ position: absolute;
+ bottom: 0.6rem;
+ right: 0.8rem;
 }
 </style>>
 

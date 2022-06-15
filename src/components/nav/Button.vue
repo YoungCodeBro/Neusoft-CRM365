@@ -40,8 +40,8 @@ button {
     justify-content: center;
 }
 button div {
-    width: fit-content;
-    height: fit-content;
+    width: 25px;
+    height: 28px;
 }
 img {
     width: 25px;

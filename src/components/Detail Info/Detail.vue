@@ -23,7 +23,6 @@
       <cmp-stepper :value="num" @change="getnum"></cmp-stepper>
       <button class="putin" @click="addfood">加入购物车</button>
     </div>
-    <button @click="test">test</button>
   </div>
 </template>
 
@@ -47,51 +46,45 @@ export default {
     };
   },
   computed: {
-    // temp() {
-    //     let name = this.foods[this.$route.params.fid - 1].name;
-    //     let num = local.getCartFoodNum(name);
-    //     if (num == 0) {
-    //         num = 1;
-    //     }
-    //     this.num = num;
-    // },
     // 菜品id
     fid() {
       return this.$route.params.fid;
     },
-    //返回链接
-    backlink() {
-      if (this.$route.query.from) {
-        return this.$route.query.from;
-      } else {
-        //默认返回链接
-        return "/menu";
-      }
-    },
   },
   methods: {
     backto() {
-      this.$router.push(this.backlink);
+      window.history.back();
     },
     //加入购物车
     addfood() {
-      alert(this.num);
-    },
-    test() {
-    //   local.addFoodToCart({name:'白菜豆腐',price:4,img:'2.jpg'},1);
-    //   local.addFoodToCart({name:'白菜豆腐',price:4,img:'2.jpg'},1);
-    alert(this.temp);
+      let food = this.foods[this.fid - 1];
+      local.modifyCartFoodCount({
+        name: food.name,
+        price: food.price,
+        img: `${this.fid}.jpg`,
+        count:this.num
+      });
     },
     //获取子组件增加后的份数
     getnum(num) {
-        this.num = num;
-    }
+      this.num = num;
+    },
   },
-  mounted () {
+  watch: {
+    $route() {
+      let name = this.foods[this.$route.params.fid - 1].name;
+      let num = local.getCartFoodNum(name);
+      if (num == 0) {
+        num = 1;
+      }
+      this.num = num;
+    },
+  },
+  mounted() {
     let name = this.foods[this.$route.params.fid - 1].name;
     let num = local.getCartFoodNum(name);
     if (num == 0) {
-        num = 1;
+      num = 1;
     }
     this.num = num;
   },
