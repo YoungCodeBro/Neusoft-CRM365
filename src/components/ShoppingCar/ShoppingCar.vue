@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div style="position:relative">
+    <div style="position: relative">
       <!--购物车信息部分-->
       <div class="a-info">
         <h2>购物车</h2>
@@ -9,7 +9,7 @@
             <p style="color: red">用餐人数:2人</p>
             <p class="ClassP">备注:无</p>
           </div>
-          <div class="number-right">
+          <div class="number-right" @click="clickT">
             <img src="../../assets/Image/edit.png" alt="" />
             <p>修改</p>
           </div>
@@ -17,7 +17,7 @@
         <div style="position: relative; height: 50px">
           <p class="in-num-price">购物车总共有6个菜</p>
           <p class="price">
-            合计:<span style="color: red; font-size: 25px">￥:58</span>
+            合计:<span style="color: red; font-size: 25px">￥:{{num*3*5}}</span>
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@
       <!--订单详情--->
       <div class="a-list">
         <ul>
-          <li v-for="item in list" :key="item" class="list-item">
+          <li v-for="(item, index) in list" :key="index" class="list-item">
             <div>
               <img :src="item.img" alt="" />
             </div>
@@ -34,7 +34,7 @@
               <p>$:{{ item.price }}</p>
             </div>
             <div class="list-button">
-              <v-stepper :value="1"></v-stepper>
+              <v-stepper :value="num" @change="numchange"></v-stepper>
             </div>
           </li>
         </ul>
@@ -46,7 +46,7 @@
         <div class="h3div"><h3>本店最常点的菜</h3></div>
         <div style="height: 10px"></div>
         <ul class="ulONE">
-          <li v-for="item in list" :key="item">
+          <li v-for="(item, index) in list" :key="index">
             <div class="divOne">
               <img :src="item.img" alt="" />
               <p>{{ item.name }}</p>
@@ -55,61 +55,65 @@
           </li>
         </ul>
       </div>
-      <!-- <div class="ButtonC">
-        <v-orderButton></v-orderButton>
-      </div> -->
+
+      <v-orderButton></v-orderButton>
+      <v-Corder></v-Corder>
+      <v-NavButton></v-NavButton>
     </div>
   </div>
 </template>
 
 <script>
-import Stepper from '../Detail Info/Stepper.vue'
-import orderButton from '../ShoppingCar/orderButton.vue'
+import Stepper from "../Detail Info/Stepper.vue";
+import orderButton from "../ShoppingCar/orderButton.vue";
+import NavButton from "../nav/NavButton.vue";
+import Corder from '../ShoppingCar/Corder.vue'
 export default {
   name: "App",
   data() {
     return {
-      sum:0,
-
+      num:1,
 
       list: [
         {
           img: require("../../assets/Image/1.jpg"),
           name: "小米粥",
           price: 5,
-          num:1,
+          num: 1,
         },
         {
           img: require("../../assets/Image/2.jpg"),
           name: "白菜",
           price: 5,
-          num:1,
+          num: 1,
         },
         {
           img: require("../../assets/Image/3.jpg"),
           name: "水白菜",
           price: 5,
-          num:1,
+          num: 1,
         },
       ],
     };
   },
   components: {
-    'v-stepper':Stepper,
-    'v-orderButton':orderButton
+    "v-stepper": Stepper,
+    "v-orderButton": orderButton,
+    "v-NavButton": NavButton,
+    'v-Corder':Corder
   },
   methods: {
-    Add: function () {
-      this.num++;
+    clickT(){
+      this.$router.push('/')
     },
-    decline: function () {
-      this.num--;
-    },
+    numchange(num) {
+      this.num = num;
+    }
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 * {
   margin: 0;
   padding: 0;
@@ -160,8 +164,7 @@ export default {
   height: 6rem;
   text-align: center;
 }
-.number-right p{
-  
+.number-right p {
   position: absolute;
   right: 2.2rem;
   bottom: 1rem;
@@ -224,7 +227,7 @@ export default {
   background: grey;
 }
 /*推荐菜*/
-.a-food{
+.a-food {
   width: 92%;
 }
 .ulONE {
@@ -233,7 +236,7 @@ export default {
   justify-content: space-around;
 }
 .divOne img {
-    width: 6.5rem;
+  width: 6.5rem;
   height: 6.5rem;
   border-radius: 0.5rem;
 }
@@ -244,8 +247,8 @@ export default {
   font-size: 0.85rem;
   padding-left: 0.5rem;
 }
-.ButtonC{
-position: absolute;
-right: 2rem;
+.ButtonC {
+  position: absolute;
+  right: 2rem;
 }
 </style>

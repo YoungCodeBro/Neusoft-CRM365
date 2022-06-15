@@ -21,7 +21,8 @@ export default {
   height: 200px;
 }
 .buttonDiv {
-  position: fixed;
+  position: fixed; 
+  right: 0;
   bottom: 0.5rem;
   left: 40%;
   width: 60px;
