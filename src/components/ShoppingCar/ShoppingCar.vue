@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -177,12 +177,11 @@ export default {
   position: absolute;
   top: 2rem;
 }
-//
+
 .MC {
   width: 100%;
   height: 0.7rem;
 }
-//
 /*订单详情 */
 
 .list-item {
