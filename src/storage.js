@@ -8,16 +8,21 @@ export const local={
   remove(key){
     localStorage.removeItem(key);
   },
-  addFoodToCart (name,count,price,picture,status) {
+  addFoodToCart (item,count) {
     let key = 'cart';
     let cart = JSON.parse(localStorage.getItem(key));
-    if(cart==null){
-      cart =[];
+    if(  cart==null){
+      cart = {};
     }
-    cart.push({name:name,count:count,price:price,picture:picture,status:status});
+    if(cart[item.name]!=null){
+      cart[item.name].count = cart[item.name].count+1;
+    }else{
+      cart[item.name]={name:item.name, count:count , price:item.price, picture:item.img , status:0};
+    }
+
     console.log(cart);
     localStorage.setItem(key,JSON.stringify(cart));
-    return '将'+name+'加入购物车成功';
+    return '将'+item.name+'加入购物车成功';
   },
   getCart(){
     let key = 'cart';

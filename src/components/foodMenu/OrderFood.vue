@@ -54,7 +54,8 @@ export default {
   methods:{
     buy(name){
       console.log('您购买了'+name);
-    }
+    },
+
   }
 }
 </script>

@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '../components/HelloWorld'
 import Start from '../components/start/Start.vue'
 import NavButton from '../components/nav/NavButton.vue'
 import Detail from '../components/Detail Info/Detail.vue'
-import Menu from '../components/liutao/Menu'
-import OrderFood from '../components/liutao/OrderFood'
-import HotFood from '../components/liutao/HotFood'
-import Ordered from '../components/liutao/Ordered'
-import Like from '../components/liutao/Like'
+import Menu from '../components/foodMenu/Menu'
+import OrderFood from '../components/foodMenu/OrderFood'
+import HotFood from '../components/foodMenu/HotFood'
+import Ordered from '../components/foodMenu/Ordered'
+import Like from '../components/foodMenu/Like'
 Vue.use(Router)
 
 export default new Router({
@@ -35,7 +35,6 @@ export default new Router({
     },
     {
       path: '/menu',
-      name: 'Menu',
       component: Menu,
       children: [
         {
