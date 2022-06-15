@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Start from '../components/start/Start.vue'
+import ShoppingCar from '../components/ShoppingCar/ShoppingCar.vue'
+import order from '../components/ShoppingCar/order.vue'
+import ShoppingCarTwo from '../components/ShoppingCar/ShoppingCarTwo.vue'
 import NavButton from '../components/nav/NavButton.vue'
 import Detail from '../components/Detail Info/Detail.vue'
 import Menu from '../components/liutao/Menu'
@@ -17,6 +20,21 @@ export default new Router({
       path: '/',
       name: 'Start',
       component: Start
+    },
+    {
+      path: '/ShoppingCar',
+      name: 'ShoppingCar',
+      component: ShoppingCar
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order
+    },
+    {
+      path: '/ShoppingCarTwo',
+      name: 'ShoppingCarTwo',
+      component: ShoppingCarTwo
     },
     {
       path: '/nav',
