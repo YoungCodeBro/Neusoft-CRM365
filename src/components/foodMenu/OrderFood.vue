@@ -1,7 +1,7 @@
 <template>
   <div id="orderFood">
-    <div v-for="title in headList">
-      <h2 :id="title" >{{title}}</h2>
+    <div v-for="title in menu">
+      <h2 :id="title">{{title.nameCn}}</h2>
       <van-row>
         <div>
           <van-col span="8" v-for="(item,index) in foods" :key="index" v-if="item.category===title" @click="buy(item.name)">
@@ -23,39 +23,36 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'Main',
   data(){
     return{
-      headList:['精选热菜','特色菜','城新小炒','田园时蔬','粗粮主食'],
       foods:[
         {name:"南瓜稀饭",img:"1.jpg",category:'精选热菜',price:1,sel:8},
-        {name:"白菜豆腐",img:"2.jpg",category:'特色菜',price:1,sel:8},
-        {name:"爆炒青菜",img:"3.jpg",category:'田园时蔬',price:1,sel:8},
-        {name:"橘子汁",img:"4.jpg",category:'田园时蔬',price:2,sel:5},
-        {name:"包子套餐",img:"5.jpg",category:'田园时蔬',price:3,sel:12},
-        {name:"煎饼",img:"6.jpg",category:'精选热菜',price:4,sel:5},
-        {name:"红烧肉",img:"7.jpg",category:'特色菜',price:5,sel:2},
-        {name:"包子套餐",img:"5.jpg",category:'特色菜',price:1,sel:9},
-        {name:"煎饼",img:"6.jpg",category:'城新小炒',price:1,sel:8},
-        {name:"红烧肉",img:"7.jpg",category:'特色菜',price:1,sel:8},
-        {name:"包子套餐",img:"5.jpg",category:'田园时蔬',price:5,sel:8},
-        {name:"煎饼",img:"6.jpg",category:'城新小炒',price:6,sel:10},
-        {name:"红烧肉",img:"7.jpg",category:'田园时蔬',price:1,sel:8},
-        {name:"包子套餐",img:"5.jpg",category:'田园时蔬',price:1,sel:8},
-        {name:"煎饼",img:"6.jpg",category:'粗粮主食',price:7,sel:8},
-        {name:"红烧肉",img:"7.jpg",category:'粗粮主食',price:8,sel:11},
-        {name:"包子套餐",img:"5.jpg",category:'特色菜',price:1,sel:1},
-        {name:"煎饼",img:"6.jpg",category:'精选热菜',price:1,sel:8},
-        {name:"红烧肉",img:"7.jpg",category:'精选热菜',price:1,sel:8},
-      ]
+      ],
+      menu:{},
+      isShow:false,
     }
   },
   methods:{
     buy(name){
       console.log('您购买了'+name);
     },
-
+    requestData(){
+      let api="http://localhost:3003/data";
+      this.$http.jsonp(api).then(function (response) {
+        this.menu=response.data.data;
+        console.log(this.menu)
+      },function (err){
+        console.log(err);
+      })
+    }
+  },
+  mounted () {
+    this.requestData();
+  },
+  created () {
   }
 }
 </script>
