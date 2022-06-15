@@ -36,7 +36,7 @@ export default {
       nav: ["返回", "菜单", "购物车", "我的订单", "结账"],
       icon: ["close.png", "book.png", "cart.png", "order.png", "wallet.png"],
       //跳转地址
-      address: ["/menu",'/','/','/'],
+      address: ["/menu",'/shoppingcar','/order','/order'],
     };
   },
   components: {

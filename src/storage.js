@@ -26,13 +26,33 @@ export const local={
   },
   getCart(){
     let key = 'cart';
-    return JSON.parse(localStorage.getItem(key));
+    let cart = JSON.parse(localStorage.getItem(key));
+    if(cart==null){
+      cart = {};
+    }
+    return cart;
   },
   clearCart(){
     let key = 'cart';
     localStorage.removeItem(key);
     return '清空购物车成功';
   },
+  /**修改购物车中某商品值，修改内容包括name，price，count，img，status */
+  modifyCartFood(name, item) {
+    let cart = this.getCart();
+    for (let key in item) {
+      cart[name][key]=item[key];
+    }
+  },
+  /**快速获取购物车中某商品数量，若无该商品则返回0 */
+  getCartFoodNum(name) {
+    let cart = this.getCart();
+    if (cart[name] == undefined) {
+      return 0;
+    } else {
+      return cart[name].count;
+    }
+  }
 }
 export const session={
   set(key,value){
