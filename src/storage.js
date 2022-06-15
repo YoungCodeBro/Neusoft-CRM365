@@ -27,8 +27,7 @@ export const local={
     let key = 'cart';
     localStorage.removeItem(key);
     return '清空购物车成功';
-  }
-
+  },
 }
 export const session={
   set(key,value){
@@ -39,5 +38,18 @@ export const session={
   },
   remove(key){
     sessionStorage.removeItem(key);
-  }
+  },
+  /**获取用餐人数，可直接使用.mealnum获取 */
+  set mealnum(num) {
+    sessionStorage.setItem('mealnum', num);
+  },
+  /**返回用餐人数，有问题时为0，可直接使用.mealnum=赋值 */
+  get mealnum() {
+    let num = sessionStorage.getItem('mealnum', num);
+    if (num == null) {
+      return 0;
+    } else {
+      return num;
+    }
+  },
 }

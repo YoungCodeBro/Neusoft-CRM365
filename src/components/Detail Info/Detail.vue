@@ -21,7 +21,6 @@
     </div>
     <div class="bottom">
         <span>数量：</span>
-        <!-- <van-stepper v-model="num" integer max="20"/> -->
         <cmp-stepper :value="num" @e-change="getnum"></cmp-stepper>
         <button class="putin" @click="addfood">加入购物车</button>
     </div>
@@ -122,6 +121,8 @@ button.back span {
 .top, .middle, .bottom {
     background: white;
     width: 98%;
+    max-width: 500px;
+    min-width: 330px;
     margin: 0 auto;
 }
 
@@ -157,6 +158,7 @@ img {
     min-height: 30px;
     max-height: 50px;
     position: absolute;
+    left: 1%;
     bottom: 10px;
     display: flex;
     align-items: center;
