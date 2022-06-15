@@ -14,8 +14,8 @@
                   <span class="sel">月售{{item.sel}}</span>
                   <div>
                     <span class="symbol">￥</span>
-                    <span class="price-num">{{item.price}}
-                    </span>
+                    <span class="price-num">{{item.price}}</span>
+                    <van-icon id="icon"  name="add" size="2rem" color="darkgray" @click="addFoodToCart(item)"/>
                   </div>
                 </div>
               </div>
@@ -29,6 +29,8 @@
 
 <script>
 import {local} from "../../storage"
+import {Notify} from 'vant'
+
 export default {
   name: 'Main',
   data(){
@@ -40,7 +42,7 @@ export default {
         {name:"爆炒青菜",img:"3.jpg",category:'田园时蔬',price:1,sel:6,ordered:3},
         {name:"橘子汁",img:"4.jpg",category:'田园时蔬',price:2,sel:5,ordered:4},
         {name:"包子套餐",img:"5.jpg",category:'田园时蔬',price:3,sel:12,ordered:0},
-      ]
+      ],
     }
   },
   methods:{
@@ -60,12 +62,30 @@ export default {
         }
       }
       return this.foods;
+    },
+    addFoodToCart(item){
+      console.log('加入'+item.name+'到购物车');
+      console.log(item);
+      let msg = local.addFoodToCart(item,1);
+      console.log(msg);
+      this.notify('加入成功！');
+    },
+    notify(msg){
+      Notify({ type: 'success', message: msg , duration:500});
     }
   },
   mounted () {
     let key = 'ordered';
     local.set(key,this.foods);
     console.log('将foods加入ordered');
+    let cart = {青菜:{"name":'青菜',"price":1}};
+    cart.白菜={"name":'白菜',"price":1};
+    cart['胡萝卜']={"name":'胡萝卜',"price":1};
+    console.log(cart);
+    console.log(cart['青菜']);
+
+    let tmp = local.getCart();
+    console.log(tmp);
   }
 }
 </script>
@@ -127,6 +147,10 @@ h2{
     .symbol{
       color: red;
       font: 1rem bold normal Arial,sans-serif;
+    }
+    #icon{
+      float: right;
+      margin-top: 0.1rem;
     }
 
   }

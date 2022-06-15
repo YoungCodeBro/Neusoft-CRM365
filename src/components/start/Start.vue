@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { session } from "../../storage";
 export default {
   data() {
     return {
@@ -39,8 +40,9 @@ export default {
     startOrder() {
       //检查用餐人数是否正确
       if (this.mealPersonNum != 0) {
+        session.mealnum = this.mealPersonNum;
         // 跳转到主页面
-        this.$router.push("/home");
+        this.$router.push("/menu");
       } else {
         alert("请选择用餐人数！");
       }

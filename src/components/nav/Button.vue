@@ -39,6 +39,10 @@ button {
     flex-flow: row wrap;
     justify-content: center;
 }
+button div {
+    width: fit-content;
+    height: fit-content;
+}
 img {
     width: 25px;
     height: 25px;

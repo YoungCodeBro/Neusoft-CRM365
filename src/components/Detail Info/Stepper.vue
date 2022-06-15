@@ -3,7 +3,7 @@
     <button class="minus" @click="minus" :disabled="left">
       <img src="../../assets/Image/minus.svg" alt="减号" />
     </button>
-    <input type="text" @change="emitevent($event)" :value="num" />
+    <input type="text" :value="value" @change.stop.prevent="checkNum($event)" />
     <button class="plus" @click="plus" :disabled="right">
       <img src="../../assets/Image/plus.svg" alt="加号" />
     </button>
@@ -15,50 +15,45 @@ export default {
   props: {
     value: Number,
   },
-  data() {
-    return {
-      //测试时注释
-      num: this.value,
-      // num: 1,
-    };
+  // data() {
+  //   return {
+  //     num: this.value,
+  //   };
+  // },
+  mounted() {
+    console.log("进步器num:" + this.num);
+    // document.querySelector("input").value=this.num;
   },
   computed: {
     //控制加减号禁用
     left() {
-      return this.num == 1;
+      return this.value == 1;
     },
     right() {
-      return this.num == 20;
+      return this.value == 20;
     },
   },
   methods: {
     //发送事件以便使用v-model，同时限制只能输入范围为1-20整数
-    emitevent(event) {
+    checkNum(event) {
       let temp = Number.parseInt(event.target.value);
+      let emitNum;
       if (Number.isNaN(temp)) {
-        this.num = 1;
-        event.target.value = 1;
+        emitNum = 1;
       } else if (temp < 1) {
-        this.num = 1;
-        event.target.value = 1;
+        emitNum = 1;
       } else if (temp > 20) {
-        this.num = 20;
-        event.target.value = 20;
+        emitNum = 20;
       } else {
-        this.num = temp;
-        event.target.value = temp;
+        emitNum = temp;
       }
-      this.$emit("e-change", this.num);
+      this.$emit("change", emitNum);
     },
     minus() {
-      this.num--;
-      document.querySelector("input").value = this.num;
-      this.$emit("e-change", this.num);
+      this.$emit("change", this.value - 1);
     },
     plus() {
-      this.num++;
-      document.querySelector("input").value = this.num;
-      this.$emit("e-change", this.num);
+      this.$emit("change", this.value + 1);
     },
   },
 };

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import HelloWorld from '../components/HelloWorld'
 import Start from '../components/start/Start.vue'
 import ShoppingCar from '../components/ShoppingCar/ShoppingCar.vue'
 import order from '../components/ShoppingCar/order.vue'
@@ -14,17 +14,17 @@ import Ordered from '../components/liutao/Ordered'
 import Like from '../components/liutao/Like'
 import orderButton from '../components/ShoppingCar/orderButton.vue'
 import Corder from '../components/ShoppingCar/Corder.vue'
+import Menu from '../components/foodMenu/Menu'
+import OrderFood from '../components/foodMenu/OrderFood'
+import HotFood from '../components/foodMenu/HotFood'
+import Ordered from '../components/foodMenu/Ordered'
+import Like from '../components/foodMenu/Like'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
-      path: '/start',
       name: 'Start',
       component: Start
     },
@@ -66,7 +66,6 @@ export default new Router({
 
     {
       path: '/menu',
-      name: 'Menu',
       component: Menu,
       children: [
         {

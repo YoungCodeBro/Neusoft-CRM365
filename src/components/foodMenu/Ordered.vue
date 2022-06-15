@@ -3,12 +3,12 @@
     <h2 v-if="getFoodsFromLocal()" @click="clearCart">{{head}}</h2>
     <van-row>
       <div>
-        <van-col span="24" v-for="(item,index) in foods" :key="index"  @click="buy(item.name)" v-if="item.ordered!==0">
+        <van-col span="24" v-for="(item,index) in foods" :key="index"  v-if="item.ordered!==0">
           <van-badge :content="0" >
             <div class="col-item">
-              <img :src="require('../../assets/Image/'+item.img)" alt="">
+              <img :src="require('../../assets/Image/'+item.img)"  @click="buy(item.name)" alt="">
               <div class="item-attr">
-                <span class="name">{{item.name}}</span>
+                <span class="name"  @click="buy(item.name)">{{item.name}}</span>
                 <div>
                   <span class="rank">{{item.ordered}}次</span>
                   <span class="symbol">￥</span>
@@ -28,6 +28,7 @@
 
 <script>
 import {local} from "../../storage"
+import { Notify } from 'vant'
 export default {
   name: 'Main',
   data(){
@@ -56,12 +57,16 @@ export default {
       let key ='cart';
       console.log('加入'+item.name+'到购物车');
       console.log(item);
-      let msg = local.addFoodToCart(item.name,1,item.price,item.img,0);
+      let msg = local.addFoodToCart(item,1);
       console.log(msg);
+      this.notify('加入成功！');
     },
     clearCart () {
       let msg = local.clearCart();
       console.log(msg);
+    },
+    notify(msg){
+      Notify({ type: 'success', message: msg , duration:500});
     }
   },
   mounted () {
@@ -141,6 +146,7 @@ h2{
     .icon{
       display: flex;
       justify-content: end;
+      margin-bottom: 0.18rem;
     }
   }
 }
