@@ -15,7 +15,7 @@ export const local={
       cart = {};
     }
     if(cart[item.name]!=null){
-      cart[item.name].count = cart[item.name].count+1;
+      cart[item.name].count = cart[item.name].count+count;
     }else{
       cart[item.name]={name:item.name, count:count , price:item.price, picture:item.img , status:0};
     }
