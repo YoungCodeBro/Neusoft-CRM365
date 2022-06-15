@@ -9,9 +9,11 @@ import NavButton from '../components/nav/NavButton.vue'
 import Detail from '../components/Detail Info/Detail.vue'
 import Menu from '../components/foodMenu/Menu'
 import OrderFood from '../components/foodMenu/OrderFood'
+import Like from '../components/foodMenu/Like'
+import orderButton from '../components/ShoppingCar/orderButton.vue'
+import Corder from '../components/ShoppingCar/Corder.vue'
 import HotFood from '../components/foodMenu/HotFood'
 import Ordered from '../components/foodMenu/Ordered'
-import Like from '../components/foodMenu/Like'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +48,17 @@ export default new Router({
       name: 'Detail',
       component: Detail
     },
+    {
+      path: '/orderButton',
+      name: 'orderButton',
+      component: orderButton
+    },
+    {
+      path: '/Corder',
+      name: 'Corder',
+      component: Corder
+    },
+
     {
       path: '/menu',
       component: Menu,
