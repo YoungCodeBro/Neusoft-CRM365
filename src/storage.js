@@ -9,6 +9,11 @@ export const local={
     localStorage.removeItem(key);
   },
 
+  /*每次购物车结算后，提交该方法
+  * 分别调用
+  * addItem(cart,'totalSel')
+  * addItem(cart,'ordered')
+  * */
   addItem(itemList,key){
     let data;
     data = this.getTotalItem(key);
