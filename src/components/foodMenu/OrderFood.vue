@@ -47,8 +47,8 @@ export default {
       item.count = count;
       let objStr = JSON.stringify(item);
       this.$router.push({
-        path:'/detail',
-        push:{
+        name:'Detail',
+        params:{
           'item':objStr,
         }
       });
