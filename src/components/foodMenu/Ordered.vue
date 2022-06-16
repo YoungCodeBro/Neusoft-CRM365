@@ -76,9 +76,6 @@ export default {
     },
 
   },
-  mounted () {
-    this.getFoodsFromLocal();
-  },
   components:{
     'nav-button':NavButton,
   }

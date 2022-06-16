@@ -51,6 +51,7 @@ export const local={
     if(ordered==null){
       ordered = {};
     }
+    console.log(ordered);
     return ordered;
   },
 
