@@ -56,6 +56,7 @@ export default {
         img: this.item.img,
         count:this.num
       });
+      alert("加入购物车成功");
     },
     //获取子组件增加后的份数
     getnum(num) {
