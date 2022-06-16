@@ -10,6 +10,7 @@
 </template>
 
 <script>
+//import { local } from "../../storage";
 export default {
   name: "App",
   methods: {
@@ -19,6 +20,7 @@ export default {
       this.$router.push('/order')
     },
   },
+  
 };
 </script>
 

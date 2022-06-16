@@ -10,7 +10,7 @@
         <p class="P-text2">请及时联系服务员确认一点菜信息</p>
       </div>
       <p style="position: absolute; top: 75px">
-        已点菜品3份,合计:<span style="color: red; font-size: 25px">48元</span>
+        已点菜品3份,合计:<span style="color: red; font-size: 25px">{{sum}}元</span>
       </p>
     </div>
     <!--中间灰的部分-->
@@ -20,12 +20,12 @@
       <div id="DetailDiv"><h3>菜品详情:</h3></div>
       <div>
         <ul>
-          <li v-for="item in list" :key="item">
+          <li v-for="item in listCart" :key="item">
             <div class="textDiv">
               <div class="textDivSmallOne">{{ item.name }}</div>
               <div class="textDivSmallTwo">
-                <div >{{ item.num }}份</div>
-                <div class="textDivSmallThree">{{ item.Money }}元</div>
+                <div >{{ item.count}}份</div>
+                <div class="textDivSmallThree">{{ item.price }}元</div>
               </div>
             </div>
           </li>
@@ -34,7 +34,7 @@
     </div>
        <v-NavButton></v-NavButton>
 <!-- <v-CorderR></v-CorderR> -->
-<v-button :text="'继续点菜'" :icon="require('../../assets/Image/book.png')"></v-button>
+<v-button :text="'继续点菜'" :icon="require('../../assets/Image/book.png')" ></v-button>
   </div>
 </template>
 
@@ -42,6 +42,7 @@
 import CorderR from '../ShoppingCar/CorderR.vue'
 import NavButton from "../nav/NavButton.vue";
 import Button from '../nav/Button.vue'
+import { local } from "../../storage";
 export default {
   name: "App",
   components:{
@@ -51,6 +52,7 @@ export default {
   },
   data() {
     return {
+     listCart:{},
       sumMoney: 12,
       MoneyOne: 12,
       list: [
@@ -60,6 +62,19 @@ export default {
       ],
     };
   },
+  computed: {
+    //购物车总价钱
+    sum() {
+      let a = 0;
+        for(let i in this.listCart){
+          a += (this.listCart[i].price * this.listCart[i].count);
+        }
+        return a;
+    }
+  },
+  mounted(){
+    this.listCart = local.getCart();
+  }
 };
 </script>
 

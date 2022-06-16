@@ -6,7 +6,7 @@
         <h2>购物车</h2>
         <div class="in-number">
           <div class="number-left">
-            <p style="color: red">用餐人数:2人</p>
+            <p style="color: red">用餐人数:{{ mealcount }}人</p>
             <p class="ClassP">备注:无</p>
           </div>
           <div class="number-right" @click="clickT">
@@ -17,7 +17,9 @@
         <div style="position: relative; height: 50px">
           <p class="in-num-price">购物车总共有6个菜</p>
           <p class="price">
-            合计:<span style="color: red; font-size: 25px">￥:{{num*3*5}}</span>
+            合计:<span style="color: red; font-size: 25px"
+              >￥:{{ sum }}</span
+            >
           </p>
         </div>
       </div>
@@ -27,14 +29,14 @@
         <ul>
           <li v-for="(item, index) in list" :key="index" class="list-item">
             <div>
-              <img :src="item.img" alt="" />
+              <img :src="require('../../assets/Image/'+item.picture)" alt="" />
             </div>
             <div class="list-item-text">
               <h4>{{ item.name }}</h4>
               <p>$:{{ item.price }}</p>
             </div>
             <div class="list-button">
-              <v-stepper :value="num" @change="numchange"></v-stepper>
+              <v-stepper :value="item.count" @change="changenum(item, $event)"></v-stepper>
             </div>
           </li>
         </ul>
@@ -48,7 +50,7 @@
         <ul class="ulONE">
           <li v-for="(item, index) in list" :key="index">
             <div class="divOne">
-              <img :src="item.img" alt="" />
+              <img :src="require('../../assets/Image/'+item.picture)" alt="" />
               <p>{{ item.name }}</p>
               <p>$:{{ item.price }}</p>
             </div>
@@ -67,53 +69,54 @@
 import Stepper from "../Detail Info/Stepper.vue";
 import orderButton from "../ShoppingCar/orderButton.vue";
 import NavButton from "../nav/NavButton.vue";
-import Corder from '../ShoppingCar/Corder.vue'
+import Corder from "../ShoppingCar/Corder.vue";
+import { session } from "../../storage";
+import { local } from "../../storage";
 export default {
   name: "App",
   data() {
     return {
-      num:1,
-
-      list: [
-        {
-          img: require("../../assets/Image/1.jpg"),
-          name: "小米粥",
-          price: 5,
-          num: 1,
-        },
-        {
-          img: require("../../assets/Image/2.jpg"),
-          name: "白菜",
-          price: 5,
-          num: 1,
-        },
-        {
-          img: require("../../assets/Image/3.jpg"),
-          name: "水白菜",
-          price: 5,
-          num: 1,
-        },
-      ],
+      num: 1,
+      mealcount: 0,
+      //保存购物车对像
+      list: {},
     };
+  },
+  computed: {
+    //购物车总价钱
+    sum() {
+      let a = 0;
+        for(let i in this.list){
+          a += (this.list[i].price * this.list[i].count);
+        }
+        return a;
+    }
+  },
+  //调用js里的对象方法夺取用餐人数以及购物车对象
+  mounted() {
+    this.mealcount = session.mealnum;
+    this.list = local.getCart();
   },
   components: {
     "v-stepper": Stepper,
     "v-orderButton": orderButton,
     "v-NavButton": NavButton,
-    'v-Corder':Corder
+    "v-Corder": Corder,
   },
   methods: {
-    clickT(){
-      this.$router.push('/')
+    clickT() {
+      this.$router.push("/");
     },
-    numchange(num) {
-      this.num = num;
+  //保存在本地
+    changenum(item, num) {
+      this.list[item.name].count = num;
+      local.modifyCartFoodCount(item);
     }
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 * {
   margin: 0;
   padding: 0;
@@ -121,7 +124,7 @@ export default {
 }
 #app {
   padding: 0.4rem auto;
-  //font-size: 15px;
+
   line-height: 1.5rem;
   font-family: "宋体";
   color: #555;
@@ -177,12 +180,12 @@ export default {
   position: absolute;
   top: 2rem;
 }
-//
+
 .MC {
   width: 100%;
   height: 0.7rem;
 }
-//
+
 /*订单详情 */
 
 .list-item {
@@ -207,7 +210,7 @@ export default {
   padding-top: 1rem;
   font-size: 1.1rem;
   font-weight: 400;
-  //padding-right: 15rem;
+
   padding-bottom: 1.5em;
 }
 .list-button div p {
