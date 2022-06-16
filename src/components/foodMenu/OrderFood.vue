@@ -4,7 +4,7 @@
       <h2 :id="foods.nameCn">{{foods.nameCn}}</h2>
       <van-row>
         <div>
-          <van-col span="8" v-for="(item,index) in foods.menuList" :key="index" @click="buy(item.name)">
+          <van-col span="8" v-for="(item,index) in foods.menuList" :key="index" @click="detail(item.nameCn,item.imageUrl,item.price/100,1)">
             <van-badge :content="0" >
               <div class="col-item">
                 <img :src="require('../../assets/kfcfood/'+item.imageUrl)" alt="菜图">
@@ -39,8 +39,19 @@ export default {
     }
   },
   methods:{
-    buy(name){
-      console.log('您购买了'+name);
+    detail(name,img,price,count){
+      let item = {};
+      item.name = name;
+      item.price = price;
+      item.img = img;
+      item.count = count;
+      let objStr = JSON.stringify(item);
+      this.$router.push({
+        path:'/detail',
+        push:{
+          'item':objStr,
+        }
+      });
     },
     requestData(){
       let api="http://localhost:3003/data";
