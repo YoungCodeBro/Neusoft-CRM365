@@ -10,7 +10,9 @@
         <p class="P-text2">请及时联系服务员确认一点菜信息</p>
       </div>
       <p style="position: absolute; top: 75px">
-        已点菜品3份,合计:<span style="color: red; font-size: 25px">{{sum}}元</span>
+        已点菜品3份,合计:<span style="color: red; font-size: 25px"
+          >{{ sum }}元</span
+        >
       </p>
     </div>
     <!--中间灰的部分-->
@@ -23,36 +25,37 @@
           <li v-for="item in listCart" :key="item">
             <div class="textDiv">
               <div class="textDivSmallOne">{{ item.name }}</div>
-              <div class="textDivSmallTwo">
-                <div >{{ item.count}}份</div>
-                <div class="textDivSmallThree">{{ item.price }}元</div>
-              </div>
+              <div class="textDivSmallTwo">{{ item.count }}份</div>
+              <div class="textDivSmallThree">{{ item.price }}元</div>
             </div>
           </li>
         </ul>
       </div>
     </div>
-       <v-NavButton></v-NavButton>
-<!-- <v-CorderR></v-CorderR> -->
-<v-button :text="'继续点菜'" :icon="require('../../assets/Image/book.png')" ></v-button>
+    <v-NavButton></v-NavButton>
+    <!-- <v-CorderR></v-CorderR> -->
+    <v-button
+      :text="'继续点菜'"
+      :icon="require('../../assets/Image/book.png')"
+    ></v-button>
   </div>
 </template>
 
 <script>
-import CorderR from '../ShoppingCar/CorderR.vue'
+import CorderR from "../ShoppingCar/CorderR.vue";
 import NavButton from "../nav/NavButton.vue";
-import Button from '../nav/Button.vue'
+import Button from "../nav/Button.vue";
 import { local } from "../../storage";
 export default {
   name: "App",
-  components:{
-     "v-NavButton": NavButton,
-    'v-CorderR':CorderR,
-    'v-button': Button
+  components: {
+    "v-NavButton": NavButton,
+    "v-CorderR": CorderR,
+    "v-button": Button,
   },
   data() {
     return {
-     listCart:{},
+      listCart: {},
       sumMoney: 12,
       MoneyOne: 12,
       list: [
@@ -66,15 +69,15 @@ export default {
     //购物车总价钱
     sum() {
       let a = 0;
-        for(let i in this.listCart){
-          a += (this.listCart[i].price * this.listCart[i].count);
-        }
-        return a;
-    }
+      for (let i in this.listCart) {
+        a += this.listCart[i].price * this.listCart[i].count;
+      }
+      return a;
+    },
   },
-  mounted(){
+  mounted() {
     this.listCart = local.getCart();
-  }
+  },
 };
 </script>
 
@@ -140,33 +143,26 @@ body {
 }
 .textDiv {
   display: flex;
-  height: 3rem;
+  height: 4rem;
+  justify-content: space-around;
+  align-items: center;
 }
 .textDivSmallOne {
-  padding-top: 1rem;
-  padding-left: 1rem;
-  font-size: 0.9rem;
-
+  width: 30%;
   text-align: center;
 }
 .textDivSmallTwo {
-  display: flex;
-  padding-top: 1rem;
-  padding-left: 11rem;
-  font-size: 1rem;
-  height: 2.5rem;
+  width: 30%;
   text-align: center;
 }
 .textDivSmallThree {
-  padding-left: 3.8rem;
-  font-size: 1rem;
-  height: 2.5rem;
+  width: 30%;
   text-align: center;
 }
 .btn {
- position: absolute;
- bottom: 0.6rem;
- right: 0.8rem;
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.8rem;
 }
 </style>>
 
