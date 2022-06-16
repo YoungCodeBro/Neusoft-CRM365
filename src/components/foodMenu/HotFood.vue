@@ -76,17 +76,19 @@ export default {
     addFoodToCart(item){
       let msg = local.addFoodToCart(item,1);
       console.log(msg);
-      this.notify('加入成功！');
+      Notify({message:'加入成功！',type: 'success',duration: 500});
+
     },
     notify(msg){
       Notify({ type: 'success', message: msg , duration:500});
     },
     clearTotalSel(){
       local.clearItem('totalSel');
+      Notify({message:'清除成功！',type: 'success',duration: 500,});
+      location.reload ()
     }
   },
   mounted () {
-    local.addItem({"tom":{name:"tom",count:1,picture:"100012808__ALL__S__20210906162856917.jpg",price:3,detail:"123"},"jerry":{name:"jerry",count:1,picture:"100012808__ALL__S__20210906162856917.jpg",price:3,detail:"123"}},'totalSel');
     this.sortSel();
   },
   components:{
@@ -106,7 +108,7 @@ h2{
 }
 #hotFood{
   background-color: #f0f0f0;
-  height: 100vh;
+  height: 100%;
 }
 .van-col{
 }
@@ -136,7 +138,7 @@ h2{
     justify-content: space-around;
     padding: 1rem 1rem 1rem;
     .name{
-      font:normal bold 1.2rem arial,sans-serif;
+      font:normal bold 1rem arial,sans-serif;
     }
     .rank{
       font:normal bold 0.5rem arial,sans-serif;
@@ -148,7 +150,7 @@ h2{
     }
     .price-num{
       color: red;
-      font: normal bold 2rem Arial,sans-serif;
+      font: normal bold 1.5rem Arial,sans-serif;
     }
     .symbol{
       color: red;

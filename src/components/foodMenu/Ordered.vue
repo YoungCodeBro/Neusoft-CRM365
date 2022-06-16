@@ -3,15 +3,15 @@
     <h2 v-if="getFoodsFromLocal()"  @click="clearOrdered">{{head}}</h2>
     <van-row>
       <div>
-        <van-col span="24" v-for="(item,index) in foods" :key="index">
+        <van-col span="24" v-for="item in foods" :key="item">
           <van-badge :content="0" >
             <div class="col-item">
               <img :src="require('../../assets/kfcfood/'+foods[item].picture)"  @click="toDetail(foods[item])" alt="">
               <div class="item-attr">
                 <span class="name"  @click="toDetail(foods[item].name)">{{foods[item].name}}</span>
-                <div>
                   <span class="rank">{{foods[item].count}}次</span>
-                  <span class="symbol">￥</span>
+                <div>
+                <span class="symbol">￥</span>
                   <span class="price-num">{{foods[item].price}}</span>
                 </div>
                 <div class="icon">
@@ -51,12 +51,13 @@ export default {
     },
     getFoodsFromLocal(){
       let foods = local.getTotalItem('ordered')
-      if(foods.length>0){
-        this.foods =foods;
-      }else{
+      console.log(foods)
+      if(foods==null){
         this.head = '您还未点过菜哦，试试吧';
-        console.log('本地未保存数据');
+      }else{
+        this.foods =foods;
       }
+      console.log(foods)
       return true;
     },
     addFoodToCart(item){
@@ -64,7 +65,7 @@ export default {
       console.log(item);
       let msg = local.addFoodToCart(item,1);
       console.log(msg);
-      this.notify('加入成功！');
+      Notify({message:'加入成功！',type: 'success',duration: 500});
     },
     clearCart () {
       let msg = local.clearCart();
@@ -75,10 +76,16 @@ export default {
     },
     clearOrdered(){
       local.clearItem('ordered');
+      Notify({message:'清除成功！',type: 'success',duration: 500});
+
+      location.reload ();
+
     }
   },
   components:{
     'nav-button':NavButton,
+  },mounted () {
+    this.getFoodsFromLocal();
   }
 
 }
@@ -96,7 +103,7 @@ h2{
 }
 #ordered{
   background-color: #f0f0f0;
-  height: 100vh;
+  height: 100%;
 }
 .van-col{
 }
@@ -127,15 +134,14 @@ h2{
     /* 上右下左 /上右下*/
     padding: 1rem 1rem 1rem;
     .name{
-      font:normal bold 1.2rem arial,sans-serif;
+      font:normal bold 1rem arial,sans-serif;
     }
     .rank{
       font:normal bold 1rem arial,sans-serif;
       color: darkgray;
-      width: 2rem;
+      width: 3rem;
       height: 3rem;
       line-height: 2rem;
-      text-align: center;
     }
     .sel{
       font:normal bold 0.5rem arial,sans-serif;
@@ -143,12 +149,11 @@ h2{
     }
     .price-num{
       color: red;
-      font: normal bold 2rem Arial,sans-serif;
+      font: normal bold 1.5rem Arial,sans-serif;
     }
     .symbol{
       color: red;
       font: 1rem bold normal Arial,sans-serif;
-      margin-left: 1rem;
     }
     .icon{
       display: flex;
