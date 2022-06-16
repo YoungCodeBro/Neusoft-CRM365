@@ -84,14 +84,14 @@ export const local={
     localStorage.removeItem(key);
     return '清空购物车成功';
   },
-  /**修改购物车中某食品数量，若无则添加该食品,包括name，count，price，img */
+  /**修改购物车中某食品数量，若无则添加该食品,包括name，count，price，img，detail */
   modifyCartFoodCount(item) {
     let key = 'cart';
     let cart = this.getCart();
     if(cart[item.name]!=null){
       cart[item.name].count = item.count;
     }else{
-      cart[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img , status:0};
+      cart[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img , status:0, detail:item.detail};
     }
     localStorage.setItem(key,JSON.stringify(cart));
   },
