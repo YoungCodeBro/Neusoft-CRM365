@@ -29,6 +29,7 @@
 <script>
 import NavButton from '../nav/NavButton'
 import {local} from '../../storage'
+import {Notify} from 'vant'
 
 export default {
   name: 'Main',
@@ -48,7 +49,7 @@ export default {
       console.log(item);
       let msg = local.addFoodToCart(item,1);
       console.log(msg);
-      this.notify('加入成功！');
+      Notify('加入成功！');
     },
     toDetail(item){
       let objStr = JSON.stringify(item);
@@ -89,7 +90,7 @@ h2{
 }
 #like{
   background-color: #f0f0f0;
-  height: 100vh;
+  height: 100%;
 }
 .van-col{
 }
