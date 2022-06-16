@@ -10,7 +10,7 @@
         <p class="P-text2">请及时联系服务员确认一点菜信息</p>
       </div>
       <p style="position: absolute; top: 75px">
-        已点菜品3份,合计:<span style="color: red; font-size: 25px"
+        已点菜品{{sunCount}}份,合计:<span style="color: red; font-size: 25px"
           >{{ sum }}元</span
         >
       </p>
@@ -75,6 +75,13 @@ export default {
       }
       return a;
     },
+    sunCount(){
+      let a = 0;
+      for(let i in this.listCart){
+          a+=this.listCart[i].count;
+      }
+      return a;
+    }
   },
   mounted() {
     this.listCart = local.getTotalItem('ordered');
