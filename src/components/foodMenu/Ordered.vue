@@ -1,21 +1,21 @@
 <template>
   <div id="ordered">
-    <h2 v-if="getFoodsFromLocal()"  @click="clearOrdered">{{head}}</h2>
+    <h2 v-if="getFoodsFromLocal()==true"  @click="clearOrdered">{{head}}</h2>
     <van-row>
       <div>
-        <van-col span="24" v-for="item in foods" :key="item">
+        <van-col span="24" v-for="(index,item) in foods" :key="item">
           <van-badge :content="0" >
             <div class="col-item">
-              <img :src="require('../../assets/kfcfood/'+foods[item].picture)"  @click="toDetail(foods[item])" alt="">
+              <img :src="require('../../assets/kfcfood/'+allFood[item].picture)"  @click="toDetail(allFood[item])" alt="">
               <div class="item-attr">
-                <span class="name"  @click="toDetail(foods[item].name)">{{foods[item].name}}</span>
-                  <span class="rank">{{foods[item].count}}次</span>
+                <span class="name"  @click="toDetail(allFood[item].name)">{{allFood[item].name}}</span>
+                  <span class="rank">{{allFood[item].count}}次</span>
                 <div>
                 <span class="symbol">￥</span>
-                  <span class="price-num">{{foods[item].price}}</span>
+                  <span class="price-num">{{allFood[item].price}}</span>
                 </div>
                 <div class="icon">
-                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(foods[item])"/>
+                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(allFood[item])"/>
                 </div>
               </div>
             </div>
@@ -37,6 +37,7 @@ export default {
     return{
       head:'您点过的菜',
       foods:{},
+      allFood:{},
     }
   },
   methods:{
@@ -56,8 +57,8 @@ export default {
         this.head = '您还未点过菜哦，试试吧';
       }else{
         this.foods =foods;
+        this.allFood=foods;
       }
-      console.log(foods)
       return true;
     },
     addFoodToCart(item){
