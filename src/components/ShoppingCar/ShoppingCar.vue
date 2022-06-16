@@ -18,8 +18,7 @@
           <p class="in-num-price">购物车总共有6个菜</p>
           <p class="price">
             合计:<span style="color: red; font-size: 25px"
-              >￥:{{ sum }}</span
-            >
+              >￥:{{ sum }}</span>
           </p>
         </div>
       </div>
@@ -29,7 +28,7 @@
         <ul>
           <li v-for="(item, index) in list" :key="index" class="list-item">
             <div>
-              <img :src="require('../../assets/Image/'+item.picture)" alt="" />
+              <img :src="require('../../assets/kfcfood/'+item.picture)" alt="" />
             </div>
             <div class="list-item-text">
               <h4>{{ item.name }}</h4>
@@ -41,23 +40,21 @@
           </li>
         </ul>
       </div>
-
       <!--推荐-->
       <div class="MC"></div>
       <div class="a-food">
         <div class="h3div"><h3>本店最常点的菜</h3></div>
         <div style="height: 10px"></div>
         <ul class="ulONE">
-          <li v-for="(item, index) in list" :key="index">
+          <li v-for="(item, index) in listone" :key="index">
             <div class="divOne">
-              <img :src="require('../../assets/Image/'+item.picture)" alt="" />
+              <img :src="item.img" alt="" />
               <p>{{ item.name }}</p>
               <p>$:{{ item.price }}</p>
             </div>
           </li>
         </ul>
       </div>
-
       <v-orderButton></v-orderButton>
       <v-Corder></v-Corder>
       <v-NavButton></v-NavButton>
@@ -80,6 +77,20 @@ export default {
       mealcount: 0,
       //保存购物车对像
       list: {},
+      listone:[
+        {img:require('../../assets/Image/1.jpg'),
+        name:"南瓜稀饭",
+        price:4
+        },
+         {img:require('../../assets/Image/2.jpg'),
+        name:"白菜豆腐",
+        price:4
+        },
+         {img:require('../../assets/Image/3.jpg'),
+        name:"辣椒白菜",
+        price:4
+        },
+      ]
     };
   },
   computed: {
