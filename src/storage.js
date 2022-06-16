@@ -8,6 +8,7 @@ export const local={
   remove(key){
     localStorage.removeItem(key);
   },
+
   addSel(selList){
     let totalSel = this.getTotalSel();
     if(totalSel==null){
@@ -22,18 +23,10 @@ export const local={
       }
     }
     //写入本地json文件
-
   },
   getTotalSel(){
-    let totalSel;
-    let api="http://localhost:3003/data";
-    this.$http.jsonp(api).then(function (response) {
-      totalSel=response.data.data;
-      console.log(totalSel);
-    },function (err){
-      console.log(err);
-    })
-    return totalSel;
+    let TotalSel = require('./assets/TotalSel.json');
+    return TotalSel;
   },
   addOrdered(itemList){
     let key = 'ordered';

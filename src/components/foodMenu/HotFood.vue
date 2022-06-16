@@ -1,71 +1,79 @@
 <template>
   <div id="hotFood">
-    <div v-for="title in headList">
-      <h2 :id="title" >{{title}}</h2>
+      <h2 :id="header" >{{header}}</h2>
       <van-row>
         <div>
-          <van-col span="24" v-for="(item,index) in sortSel()" :key="index"  @click="buy(item.name)">
+          <van-col span="24" v-for="(item,index) in attr" :key="index"  @click="toDetail(item)">
             <van-badge :content="0" >
               <div class="col-item">
-                <img :src="require('../../assets/Image/'+item.img)" alt="">
+                <img :src="require('../../assets/kfcfood/'+itemList[item].img)" alt="">
                 <div class="item-attr">
-                  <span class="name">{{item.name}}</span>
+                  <span class="name">{{itemList[item].name}}</span>
                   <span class="rank">本店销量第{{index+1}}</span>
-                  <span class="sel">月售{{item.sel}}</span>
+                  <span class="sel">月售{{itemList[item].count}}</span>
                   <div>
                     <span class="symbol">￥</span>
-                    <span class="price-num">{{item.price}}</span>
-                    <van-icon id="icon"  name="add" size="2rem" color="darkgray" @click="addFoodToCart(item)"/>
+                    <span class="price-num">{{itemList[item].price}}</span>
+                    <van-icon id="icon"  name="add" size="2rem" color="darkgray" @click="addFoodToCart(itemList[item])"/>
                   </div>
                 </div>
               </div>
             </van-badge>
           </van-col>
         </div>
+        <nav-button></nav-button>
       </van-row>
-    </div>
   </div>
 </template>
 
 <script>
 import {local} from "../../storage"
 import {Notify} from 'vant'
+import NavButton from '../nav/NavButton'
 
 export default {
   name: 'Main',
   data(){
     return{
-      headList:['本店热销榜'],
-      foods:[
-        {name:"南瓜稀饭",img:"1.jpg",category:'精选热菜',price:1,sel:8,ordered:1},
-        {name:"白菜豆腐",img:"2.jpg",category:'特色菜',price:1,sel:7,ordered:2},
-        {name:"爆炒青菜",img:"3.jpg",category:'田园时蔬',price:1,sel:6,ordered:3},
-        {name:"橘子汁",img:"4.jpg",category:'田园时蔬',price:2,sel:5,ordered:4},
-        {name:"包子套餐",img:"5.jpg",category:'田园时蔬',price:3,sel:12,ordered:0},
-      ],
+      header:'本店热销榜',
+      attr:[],
+      itemList:{},
     }
   },
   methods:{
+    toDetail(name){
+      let item = this.itemList[name];
+      let objStr = JSON.stringify(item);
+      this.$router.push({
+        name:'Detail',
+        params:{
+          'item':objStr,
+        }
+      });
+    },
     buy(name){
       console.log('您购买了'+name);
     },
     sortSel(){
-      let sortArray = this.foods
-      let len = this.foods.length;
+      let sortArray = local.getTotalSel();
+      this.itemList = sortArray;
+      //拿到的是一个属性数组
+      let attr = Object.keys(sortArray);
+
+      let len = attr.length;
+
       for(let i = 0; i < len-1; i++){
         for(let j = 0; j < len-1-i; j++){
-          if(this.foods[j].sel<this.foods[j+1].sel){
-            var temp =this.foods[j];
-            this.foods[j]=this.foods[j+1];
-            this.foods[j+1]=temp;
+          if(sortArray[attr[j]].count<sortArray[attr[j+1]].count){
+            let temp =attr[j];
+            attr[j]=attr[j+1];
+            attr[j+1]=temp;
           }
         }
       }
-      return this.foods;
+      this.attr = attr;
     },
     addFoodToCart(item){
-      console.log('加入'+item.name+'到购物车');
-      console.log(item);
       let msg = local.addFoodToCart(item,1);
       console.log(msg);
       this.notify('加入成功！');
@@ -75,17 +83,10 @@ export default {
     }
   },
   mounted () {
-    let key = 'ordered';
-    local.set(key,this.foods);
-    console.log('将foods加入ordered');
-    let cart = {青菜:{"name":'青菜',"price":1}};
-    cart.白菜={"name":'白菜',"price":1};
-    cart['胡萝卜']={"name":'胡萝卜',"price":1};
-    console.log(cart);
-    console.log(cart['青菜']);
-
-    let tmp = local.getCart();
-    console.log(tmp);
+    this.sortSel();
+  },
+  components:{
+    'nav-button':NavButton,
   }
 }
 </script>
@@ -101,6 +102,7 @@ h2{
 }
 #hotFood{
   background-color: #f0f0f0;
+  height: 100vh;
 }
 .van-col{
 }
