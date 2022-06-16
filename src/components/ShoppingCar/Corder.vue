@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <div class="buttonDiv">
-    <button class="button">
+    <button class="button" @click="clickT()">
       <img src="../../assets/Image/menu.png" alt="" />
     </button>
      <p>继续点菜</p>
@@ -12,6 +12,11 @@
 <script>
 export default {
   name: "App",
+  methods: {
+    clickT(){
+     this.$router.push('/menu')
+    }
+  }
 };
 </script>
 

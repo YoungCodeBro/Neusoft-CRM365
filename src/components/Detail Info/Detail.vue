@@ -34,7 +34,14 @@ export default {
     return {
       //菜品数量
       num: 1,
-      item:{}
+      item:{
+        name:"秘汁全鸡CX",
+        price:38.9,
+        img:"100070038__ALL__S__20220531110958738.jpg",
+        count:1,
+        status:0,
+        detail:"秘汁全鸡是去内脏、去头、去颈、去爪、去尾的全鸡。"
+      },
     };
   },
   methods: {
@@ -49,6 +56,7 @@ export default {
         img: this.item.img,
         count:this.num
       });
+      alert("加入购物车成功");
     },
     //获取子组件增加后的份数
     getnum(num) {
@@ -59,7 +67,7 @@ export default {
     $route() {
       let json = this.$route.params.item;
       this.item = JSON.parse(json);
-      let name = item.name;
+      let name = this.item.name;
       let num = local.getCartFoodNum(name);
       if (num == 0) {
         num = 1;
@@ -68,12 +76,9 @@ export default {
     },
   },
   mounted() {
-    console.log("----------")
-    console.log(this.$route.params.item);
     let json = this.$route.params.item;
     this.item = JSON.parse(json);
-    console.log(this.item)
-    let name = item.name;
+    let name = this.item.name;
     let num = local.getCartFoodNum(name);
     if (num == 0) {
       num = 1;
