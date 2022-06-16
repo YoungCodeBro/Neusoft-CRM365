@@ -13,6 +13,8 @@ export const local={
   * 分别调用
   * addItem(cart,'totalSel')
   * addItem(cart,'ordered')
+  * 其中 cart属性如下
+  * {"tom":{name:"tom",count:1,picture:"100012808__ALL__S__20210906162856917.jpg",price:3,detail:"123"}
   * */
   addItem(itemList,key){
     let data;
