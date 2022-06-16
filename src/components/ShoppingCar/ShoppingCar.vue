@@ -55,7 +55,7 @@
           </li>
         </ul>
       </div>
-      <v-orderButton></v-orderButton>
+      <v-orderButton @saveorder="ordered"></v-orderButton>
       <v-Corder></v-Corder>
       <v-NavButton></v-NavButton>
     </div>
@@ -117,6 +117,17 @@ export default {
   methods: {
     clickT() {
       this.$router.push("/");
+    },
+    ordered() {
+      for (let key in this.list) {
+        let temp = {};
+        temp[key] = this.list[key];
+        local.addItem(temp,'totalSel');
+        local.addItem(temp,'ordered');
+      }
+      local.clearCart();
+      alert("已下单");
+      this.$router.push('/order')
     },
   //保存在本地
     changenum(item, num) {

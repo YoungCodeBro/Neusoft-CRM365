@@ -15,9 +15,7 @@ export default {
   name: "App",
   methods: {
     clickT() {
-      local.clearCart();
-      alert("已下单");
-      this.$router.push('/order')
+      this.$emit('saveorder');
     },
   },
   
