@@ -15,7 +15,7 @@
           </div>
         </div>
         <div style="position: relative; height: 50px">
-          <p class="in-num-price">购物车总共有6个菜</p>
+          <p class="in-num-price">购物车总共有{{sunCount}}个菜</p>
           <p class="price">
             合计:<span style="color: red; font-size: 25px"
               >￥:{{ sum }}</span>
@@ -101,6 +101,13 @@ export default {
           a += (this.list[i].price * this.list[i].count);
         }
         return a;
+    },
+     sunCount(){
+      let a = 0;
+      for(let i in this.list){
+          a+=this.list[i].count;
+      }
+      return a;
     }
   },
   //调用js里的对象方法夺取用餐人数以及购物车对象
