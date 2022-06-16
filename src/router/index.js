@@ -44,7 +44,7 @@ export default new Router({
       component: NavButton
     },
     {
-      path: '/detail/:item',
+      path: '/detail',
       name: 'Detail',
       component: Detail
     },

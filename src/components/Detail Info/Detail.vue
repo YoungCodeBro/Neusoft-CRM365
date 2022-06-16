@@ -37,12 +37,6 @@ export default {
       item:{}
     };
   },
-  // computed: {
-  //   // 菜品id
-  //   fid() {
-  //     return this.$route.params.fid;
-  //   },
-  // },
   methods: {
     backto() {
       window.history.back();
@@ -74,7 +68,8 @@ export default {
     },
   },
   mounted() {
-    console.log("dsajf")
+    console.log("----------")
+    console.log(this.$route.params.item);
     let json = this.$route.params.item;
     this.item = JSON.parse(json);
     console.log(this.item)
