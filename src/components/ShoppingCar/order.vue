@@ -77,7 +77,7 @@ export default {
     },
   },
   mounted() {
-    this.listCart = local.getCart();
+    this.listCart = local.getTotalItem('ordered');
   },
 };
 </script>
