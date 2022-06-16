@@ -34,6 +34,7 @@ export default {
       foods:[],
       menu:{},
       isShow:false,
+      isHaveItem:true,
       urlHeader:"https://pcp-pic.hwwt8.com",
     }
   },

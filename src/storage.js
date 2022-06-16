@@ -48,6 +48,8 @@ export const local={
   },
 
   addFoodToCart (item,count) {
+
+    console.log(item)
     let key = 'cart';
     let cart = JSON.parse(localStorage.getItem(key));
     if(  cart==null){

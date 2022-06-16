@@ -1,21 +1,22 @@
 <template>
   <div id="ordered">
-    <h2 v-if="getFoodsFromLocal()==true"  @click="clearOrdered">{{head}}</h2>
-    <van-row>
+    <div v-show="isHaveItem">
+      <h2 @click="clearOrdered">{{head}}</h2>
+      <van-row>
       <div>
-        <van-col span="24" v-for="(index,item) in foods" :key="item">
+        <van-col span="24" v-for="item in attr" :key="item">
           <van-badge :content="0" >
             <div class="col-item">
-              <img :src="require('../../assets/kfcfood/'+allFood[item].picture)"  @click="toDetail(allFood[item])" alt="">
+              <img :src="require('../../assets/kfcfood/'+(foods[item].picture))"  @click="toDetail(foods[item].name,foods[item].picture,foods[item].price,[item].count,foods[item].detail)" alt="pic">
               <div class="item-attr">
-                <span class="name"  @click="toDetail(allFood[item].name)">{{allFood[item].name}}</span>
-                  <span class="rank">{{allFood[item].count}}次</span>
+                <span class="name" >{{foods[item].name}}</span>
+                  <span class="rank">{{foods[item].count}}次</span>
                 <div>
                 <span class="symbol">￥</span>
-                  <span class="price-num">{{allFood[item].price}}</span>
+                  <span class="price-num">{{foods[item].price}}</span>
                 </div>
                 <div class="icon">
-                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(allFood[item])"/>
+                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(foods[item])"/>
                 </div>
               </div>
             </div>
@@ -24,6 +25,12 @@
       </div>
     </van-row>
     <nav-button></nav-button>
+    </div>
+    <div v-show="!isHaveItem" class="noItem">
+      <p>您还未点过菜哦</p>
+      <p>赶快试试吧</p>
+      <van-loading type="spinner" color="#1989fa" size="10rem" style="margin-top: 8rem"/>
+    </div>
   </div>
 </template>
 
@@ -37,12 +44,21 @@ export default {
     return{
       head:'您点过的菜',
       foods:{},
-      allFood:{},
+      attr:[],
+      isHaveItem:true,
     }
   },
   methods:{
-    toDetail(item){
+    toDetail(name,img,price,count,detail){
+      let item = {};
+      item.name = name;
+      item.price = price;
+      item.img = img;
+      item.count = count;
+      item.status = 0;
+      item.detail = detail;
       let objStr = JSON.stringify(item);
+      console.log(objStr);
       this.$router.push({
         name:'Detail',
         params:{
@@ -51,21 +67,23 @@ export default {
       });
     },
     getFoodsFromLocal(){
-      let foods = local.getTotalItem('ordered')
-      console.log(foods)
-      if(foods==null){
-        this.head = '您还未点过菜哦，试试吧';
+      let itemList = local.getTotalItem('ordered');
+
+      if(itemList==null){
+        this.head = '您还未点过菜哦，赶快试试吧';
+        this.isHaveItem = false;
       }else{
-        this.foods =foods;
-        this.allFood=foods;
+        this.attr = Object.keys(itemList);
+        console.log(this.attr)
+        console.log(itemList)
+        this.foods =itemList;
       }
-      return true;
     },
     addFoodToCart(item){
-      console.log('加入'+item.name+'到购物车');
-      console.log(item);
+      item.img = item.picture;
+      console.log("--------------------")
+      console.log(item)
       let msg = local.addFoodToCart(item,1);
-      console.log(msg);
       Notify({message:'加入成功！',type: 'success',duration: 500});
     },
     clearCart () {
@@ -85,7 +103,7 @@ export default {
   },
   components:{
     'nav-button':NavButton,
-  },mounted () {
+  },created () {
     this.getFoodsFromLocal();
   }
 
@@ -107,6 +125,14 @@ h2{
   height: 100%;
 }
 .van-col{
+}
+.noItem{
+  text-align: center;
+  height: 100vh;
+  p{
+    font:normal bold 1.8rem arial,sans-serif;
+    padding-top: 2rem;
+  }
 }
 .van-col{
   padding: 1rem;

@@ -3,18 +3,18 @@
     <h2>{{header}}</h2>
     <van-row>
       <div v-for="foods in menu">
-        <van-col span="24" v-for="(item,index) in foods.menuList" :key="index">
+        <van-col span="24" v-for="(item,index) in foods.menuList" :key="index" v-if="isShow()">
           <van-badge :content="0" >
             <div class="col-item">
               <img :src="require('../../assets/kfcfood/'+item.imageUrl)"  @click="toDetail({name:item.nameCn,picture:item.imageUrl,price:item.price/100,count:1,detail:item.descCn})" alt="图片">
               <div class="item-attr">
                 <span class="name"  @click="toDetail({name:item.nameCn,picture:item.imageUrl,price:item.price/100,count:1,detail:item.descCn})">{{item.nameCn}}</span>
-                <div>
+                <div class="myBox">
                   <span class="symbol">￥</span>
                   <span class="price-num">{{item.price/100}}</span>
                 </div>
                 <div class="icon">
-                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart({name:item.nameCn,price:item.price/100,detail:item.descCn,img:item.imageUrl})"/>
+                  <van-icon style="float: right" name="add" size="2rem" color="darkgray" @click="addFoodToCart({name:item.nameCn,price:item.price/100,detail:item.descCn,img:item.imageUrl})"/>
                 </div>
               </div>
             </div>
@@ -41,6 +41,9 @@ export default {
     }
   },
   methods:{
+    isShow(){
+      return Math.random() > 0.5;
+    },
     buy(name){
       console.log('您购买了'+name);
     },
@@ -120,7 +123,7 @@ h2{
     justify-content: space-around;
     padding: 1rem 1rem 1rem;
     .name{
-      font:normal bold 1.2rem arial,sans-serif;
+      font:normal bold 1rem arial,sans-serif;
     }
     .rank{
       font:normal bold 0.5rem arial,sans-serif;
@@ -137,10 +140,12 @@ h2{
     .symbol{
       color: red;
       font: 1rem bold normal Arial,sans-serif;
+
     }
-    #icon{
-      float: right;
-      margin-top: 0.1rem;
+    .icon{
+    }
+    .myBox{
+      width: 150%;
     }
 
   }

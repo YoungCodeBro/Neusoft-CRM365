@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     showPopup(){
-      if(document.getElementById('navBut').innerHTML==='返回'){
+      if(location.href!='http://localhost:8080/#/menu'){
         this.$router.push('/menu');
         document.getElementById('navBut').innerHTML = '菜单';
       }else{
