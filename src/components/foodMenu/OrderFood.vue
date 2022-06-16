@@ -55,15 +55,7 @@ export default {
         }
       });
     },
-    requestData(){
-      let api="http://localhost:3003/data";
-      this.$http.jsonp(api).then(function (response) {
-        this.menu=response.data.data;
-        console.log(this.menu)
-      },function (err){
-        console.log(err);
-      })
-    },
+
 
   },
   mounted () {

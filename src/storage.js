@@ -9,50 +9,35 @@ export const local={
     localStorage.removeItem(key);
   },
 
-  addSel(selList){
-    let totalSel = this.getTotalSel();
-    if(totalSel==null){
-      totalSel = selList;
+  addItem(itemList,key){
+    let data;
+    data = this.getTotalItem(key);
+    if(data==null){
+      data = itemList;
     }else{
-      for(let item in selList){
-        if(totalSel[item.name]!=null){
-          totalSel[item.name].count=totalSel[item.name].count+item.count;
-        }else{
-          totalSel[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img};
+      for(let item in itemList) {
+        if (data[item] != null) {
+          data[item].count = data[item].count + itemList[item].count;
+        } else {
+          data[item] = {
+            name: item,
+            count: itemList[item].count,
+            price: itemList[item].price,
+            picture: itemList[item].picture,
+            detail: itemList[item].detail
+          };
         }
       }
     }
-    //写入本地json文件
+    this.set(key,data);
+    console.log(key+':添加成功');
   },
-  getTotalSel(){
-    let TotalSel = require('./assets/TotalSel.json');
-    return TotalSel;
-  },
-  addOrdered(itemList){
-    let key = 'ordered';
-    let orderList = JSON.parse(localStorage.getItem(key));
-    if(orderList==null){
-      orderList = {};
-    }
-    for(let item in itemList){
-      if(orderList[item.name]!=null){
-        orderList[item.name].count = orderList[item.name].count+item.count;;
-      }else{
-        orderList[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img};
-      }
-    }
-    console.log(orderList);
-    localStorage.setItem(key,JSON.stringify(orderList));
-    return '加入已购成功';
-  },
-  getOrdered(){
-    let key = 'ordered';
-    let ordered = JSON.parse(localStorage.getItem(key));
-    if(ordered==null){
-      ordered = {};
-    }
-    console.log(ordered);
-    return ordered;
+  clearItem(key){
+    this.remove(key);
+  }
+  ,
+  getTotalItem(key){
+    return this.get(key);
   },
 
   addFoodToCart (item,count) {
@@ -64,7 +49,7 @@ export const local={
     if(cart[item.name]!=null){
       cart[item.name].count = cart[item.name].count+count;
     }else{
-      cart[item.name]={name:item.name, count:count , price:item.price, picture:item.img , status:0};
+      cart[item.name]={name:item.name, count:count , price:item.price, picture:item.img , status:0 , detail:item.detail};
     }
 
     console.log(cart);

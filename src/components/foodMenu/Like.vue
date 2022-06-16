@@ -1,46 +1,79 @@
 <template>
-  <div id="hotFood">
-    <div v-for="title in headList">
-      <h2 :id="title" >{{title}}</h2>
-      <van-row>
-        <div>
-          <van-col span="8" v-for="(item,index) in foods" :key="index" v-if="item.category===title" @click="buy(item.name)">
-            <van-badge :content="0" >
-              <div class="col-item">
-                <img :src="item.img" alt="">
-                <div class="item-attr">
-                  <span class="name">{{item.name}}</span><br>
+  <div id="like">
+    <h2>{{header}}</h2>
+    <van-row>
+      <div v-for="foods in menu">
+        <van-col span="24" v-for="(item,index) in foods.menuList" :key="index">
+          <van-badge :content="0" >
+            <div class="col-item">
+              <img :src="require('../../assets/kfcfood/'+item.imageUrl)"  @click="toDetail({name:item.nameCn,picture:item.imageUrl,price:item.price/100,count:1,detail:item.descCn})" alt="图片">
+              <div class="item-attr">
+                <span class="name"  @click="toDetail({name:item.nameCn,picture:item.imageUrl,price:item.price/100,count:1,detail:item.descCn})">{{item.nameCn}}</span>
+                <div>
                   <span class="symbol">￥</span>
-                  <span class="price-num">{{item.price}}</span>
+                  <span class="price-num">{{item.price/100}}</span>
+                </div>
+                <div class="icon">
+                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart({name:item.nameCn,price:item.price/100,detail:item.descCn,img:item.imageUrl})"/>
                 </div>
               </div>
-            </van-badge>
-          </van-col>
-        </div>
-      </van-row>
-    </div>
+            </div>
+          </van-badge>
+        </van-col>
+      </div>
+    </van-row>
+    <nav-button></nav-button>
   </div>
 </template>
 
 <script>
+import NavButton from '../nav/NavButton'
+import {local} from '../../storage'
+
 export default {
   name: 'Main',
   data(){
     return{
-      headList:['精选热菜','特色菜','城新小炒','田园时蔬','粗粮主食'],
-      foods:[
-        {name:"南瓜稀饭",img:require("../../assets/Image/1.jpg"),category:'精选热菜',price:1,sel:8},
-        {name:"白菜豆腐",img:require("../../assets/Image/2.jpg"),category:'特色菜',price:1,sel:8},
-        {name:"爆炒青菜",img:require("../../assets/Image/3.jpg"),category:'田园时蔬',price:1,sel:8},
-        {name:"橘子汁",img:require("../../assets/Image/4.jpg"),category:'田园时蔬',price:2,sel:5},
-        {name:"包子套餐",img:require("../../assets/Image/5.jpg"),category:'田园时蔬',price:3,sel:12},
-      ]
+      header:'猜你喜欢',
+      foods:[],
+      menu:{},
     }
   },
   methods:{
     buy(name){
       console.log('您购买了'+name);
-    }
+    },
+    addFoodToCart(item){
+      console.log('加入'+item.name+'到购物车');
+      console.log(item);
+      let msg = local.addFoodToCart(item,1);
+      console.log(msg);
+      this.notify('加入成功！');
+    },
+    toDetail(item){
+      let objStr = JSON.stringify(item);
+      this.$router.push({
+        name:'Detail',
+        params:{
+          'item':objStr,
+        }
+      });
+    },
+    requestData(){
+      let api="http://localhost:3003/data";
+      this.$http.jsonp(api).then(function (response) {
+        this.menu=response.data.data;
+        console.log(this.menu);
+      },function (err){
+        console.log(err);
+      })
+    },
+  },
+  components:{
+    'nav-button':NavButton,
+  },
+  mounted () {
+    this.requestData();
   }
 }
 </script>
@@ -53,41 +86,65 @@ export default {
 h2{
   text-align: center;
   font-size: 1rem;
-  padding: 0.5rem;
 }
-#hotFood{
+#like{
   background-color: #f0f0f0;
+  height: 100vh;
 }
 .van-col{
 }
 .van-col{
-  padding: 10px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
   .col-item{
+    display: flex;
+    flex:1;
     background-color: #f7f8f8;
     border-radius: 10px;
     text-align: center;
     height:10rem;
+    width: 20rem
   }
   img{
-    width: 100%;
-    border-top-right-radius: 0.5rem;
+    flex: 1;
+    border-bottom-left-radius: 0.5rem;
     border-top-left-radius: 0.5rem;
   }
   .item-attr{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: space-around;
+    padding: 1rem 1rem 1rem;
     .name{
-      font:normal bold 0.8rem arial,sans-serif;
+      font:normal bold 1.2rem arial,sans-serif;
+    }
+    .rank{
+      font:normal bold 0.5rem arial,sans-serif;
+      color: darkorange;
+    }
+    .sel{
+      font:normal bold 0.5rem arial,sans-serif;
+      color: darkgray;
     }
     .price-num{
       color: red;
-      font: normal bold 1rem Arial,sans-serif;
+      font: normal bold 2rem Arial,sans-serif;
     }
     .symbol{
       color: red;
-      font: 0.1rem bold normal Arial,sans-serif;
+      font: 1rem bold normal Arial,sans-serif;
     }
+    #icon{
+      float: right;
+      margin-top: 0.1rem;
+    }
+
   }
 }
-#hotFood /deep/.van-badge{
+#like /deep/.van-badge{
   opacity: 0;
 }
 

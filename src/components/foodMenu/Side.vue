@@ -49,7 +49,6 @@ export default {
       }
     },
     scrollToView(title){
-      console.log(title);
       this.showPopup();
     //先获取目标位置距离
       let targetbox= document.getElementById(title);
@@ -65,7 +64,6 @@ export default {
       let api="http://localhost:3003/data";
       this.$http.jsonp(api).then(function (response) {
         this.menu=response.data.data;
-        console.log(this.menu)
       },function (err){
         console.log(err);
       })

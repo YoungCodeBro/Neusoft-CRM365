@@ -1,12 +1,12 @@
 <template>
   <div id="ordered">
-    <h2 v-if="getFoodsFromLocal()" @click="clearCart">{{head}}</h2>
+    <h2 v-if="getFoodsFromLocal()" >{{head}}</h2>
     <van-row>
       <div>
         <van-col span="24" v-for="(item,index) in foods" :key="index">
           <van-badge :content="0" >
             <div class="col-item">
-              <img :src="require('../../assets/kfcfood/'+foods[item].img)"  @click="toDetail(foods[item])" alt="">
+              <img :src="require('../../assets/kfcfood/'+foods[item].picture)"  @click="toDetail(foods[item])" alt="">
               <div class="item-attr">
                 <span class="name"  @click="toDetail(foods[item].name)">{{foods[item].name}}</span>
                 <div>
@@ -50,8 +50,8 @@ export default {
       });
     },
     getFoodsFromLocal(){
-      let foods = local.getOrdered()
-      if(foods!=null){
+      let foods = local.getTotalItem('ordered')
+      if(foods.length>0){
         this.foods =foods;
       }else{
         this.head = '您还未点过菜哦，试试吧';
@@ -60,7 +60,6 @@ export default {
       return true;
     },
     addFoodToCart(item){
-      let key ='cart';
       console.log('加入'+item.name+'到购物车');
       console.log(item);
       let msg = local.addFoodToCart(item,1);
@@ -95,6 +94,7 @@ h2{
 }
 #ordered{
   background-color: #f0f0f0;
+  height: 100vh;
 }
 .van-col{
 }

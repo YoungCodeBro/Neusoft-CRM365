@@ -6,7 +6,7 @@
           <van-col span="24" v-for="(item,index) in attr" :key="index"  @click="toDetail(item)">
             <van-badge :content="0" >
               <div class="col-item">
-                <img :src="require('../../assets/kfcfood/'+itemList[item].img)" alt="">
+                <img :src="require('../../assets/kfcfood/'+itemList[item].picture)" alt="">
                 <div class="item-attr">
                   <span class="name">{{itemList[item].name}}</span>
                   <span class="rank">本店销量第{{index+1}}</span>
@@ -55,7 +55,7 @@ export default {
       console.log('您购买了'+name);
     },
     sortSel(){
-      let sortArray = local.getTotalSel();
+      let sortArray = local.getTotalItem('totalSel');
       this.itemList = sortArray;
       //拿到的是一个属性数组
       let attr = Object.keys(sortArray);
@@ -83,6 +83,7 @@ export default {
     }
   },
   mounted () {
+    local.addItem({"tom":{name:"tom",count:1,picture:"100012808__ALL__S__20210906162856917.jpg",price:3,detail:"123"},"jerry":{name:"jerry",count:1,picture:"100012808__ALL__S__20210906162856917.jpg",price:3,detail:"123"}},'totalSel');
     this.sortSel();
   },
   components:{
