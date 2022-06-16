@@ -54,8 +54,10 @@ export default {
         name: this.item.name,
         price: this.item.price,
         img: this.item.img,
-        count:this.num
+        count:this.num,
+        detail:this.item.detail
       });
+      alert("加入购物车成功");
     },
     //获取子组件增加后的份数
     getnum(num) {

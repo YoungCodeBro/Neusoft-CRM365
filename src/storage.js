@@ -8,6 +8,7 @@ export const local={
   remove(key){
     localStorage.removeItem(key);
   },
+
   addSel(selList){
     let totalSel = this.getTotalSel();
     if(totalSel==null){
@@ -22,18 +23,10 @@ export const local={
       }
     }
     //写入本地json文件
-
   },
   getTotalSel(){
-    let totalSel;
-    let api="http://localhost:3003/data";
-    this.$http.jsonp(api).then(function (response) {
-      totalSel=response.data.data;
-      console.log(totalSel);
-    },function (err){
-      console.log(err);
-    })
-    return totalSel;
+    let TotalSel = require('./assets/TotalSel.json');
+    return TotalSel;
   },
   addOrdered(itemList){
     let key = 'ordered';
@@ -58,6 +51,7 @@ export const local={
     if(ordered==null){
       ordered = {};
     }
+    console.log(ordered);
     return ordered;
   },
 
@@ -90,14 +84,14 @@ export const local={
     localStorage.removeItem(key);
     return '清空购物车成功';
   },
-  /**修改购物车中某食品数量，若无则添加该食品,包括name，count，price，img */
+  /**修改购物车中某食品数量，若无则添加该食品,包括name，count，price，img，detail */
   modifyCartFoodCount(item) {
     let key = 'cart';
     let cart = this.getCart();
     if(cart[item.name]!=null){
       cart[item.name].count = item.count;
     }else{
-      cart[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img , status:0};
+      cart[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img , status:0, detail:item.detail};
     }
     localStorage.setItem(key,JSON.stringify(cart));
   },

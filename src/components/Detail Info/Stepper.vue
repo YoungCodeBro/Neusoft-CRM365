@@ -25,7 +25,7 @@ export default {
     },
   },
   methods: {
-    //发送事件以便使用v-model，同时限制只能输入范围为1-20整数
+    //向父组件发送事件方便更新数据，同时限制只能输入范围为1-20整数
     checkNum(event) {
       let temp = Number.parseInt(event.target.value);
       let emitNum;

@@ -4,7 +4,7 @@
       <h2 :id="foods.nameCn">{{foods.nameCn}}</h2>
       <van-row>
         <div>
-          <van-col span="8" v-for="(item,index) in foods.menuList" :key="index" @click="detail(item.nameCn,item.imageUrl,item.price/100,1,item.descCn)">
+          <van-col span="8" v-for="(item,index) in foods.menuList" :key="index" @click="toDetail(item.nameCn,item.imageUrl,item.price/100,1,item.descCn)">
             <van-badge :content="0" >
               <div class="col-item">
                 <img :src="require('../../assets/kfcfood/'+item.imageUrl)" alt="菜图">
@@ -21,25 +21,24 @@
         </div>
       </van-row>
     </div>
+    <nav-button></nav-button>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import NavButton from '../nav/NavButton'
 export default {
   name: 'Main',
   data(){
     return{
-      foods:[
-        {name:"南瓜稀饭",img:"1.jpg",category:'精选热菜',price:1,sel:8},
-      ],
+      foods:[],
       menu:{},
       isShow:false,
       urlHeader:"https://pcp-pic.hwwt8.com",
     }
   },
   methods:{
-    detail(name,img,price,count,detail){
+    toDetail(name,img,price,count,detail){
       let item = {};
       item.name = name;
       item.price = price;
@@ -71,6 +70,9 @@ export default {
     this.requestData();
   },
   created () {
+  },
+  components:{
+    'nav-button':NavButton,
   }
 }
 </script>

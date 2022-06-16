@@ -3,19 +3,19 @@
     <h2 v-if="getFoodsFromLocal()" @click="clearCart">{{head}}</h2>
     <van-row>
       <div>
-        <van-col span="24" v-for="(item,index) in foods" :key="index"  v-if="item.ordered!==0">
+        <van-col span="24" v-for="(item,index) in foods" :key="index">
           <van-badge :content="0" >
             <div class="col-item">
-              <img :src="require('../../assets/Image/'+item.img)"  @click="buy(item.name)" alt="">
+              <img :src="require('../../assets/kfcfood/'+foods[item].img)"  @click="toDetail(foods[item])" alt="">
               <div class="item-attr">
-                <span class="name"  @click="buy(item.name)">{{item.name}}</span>
+                <span class="name"  @click="toDetail(foods[item].name)">{{foods[item].name}}</span>
                 <div>
-                  <span class="rank">{{item.ordered}}次</span>
+                  <span class="rank">{{foods[item].count}}次</span>
                   <span class="symbol">￥</span>
-                  <span class="price-num">{{item.price}}</span>
+                  <span class="price-num">{{foods[item].price}}</span>
                 </div>
                 <div class="icon">
-                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(item)"/>
+                  <van-icon name="add" size="2rem" color="darkgray" @click="addFoodToCart(foods[item])"/>
                 </div>
               </div>
             </div>
@@ -23,10 +23,12 @@
         </van-col>
       </div>
     </van-row>
+    <nav-button></nav-button>
   </div>
 </template>
 
 <script>
+import NavButton from '../nav/NavButton'
 import {local} from "../../storage"
 import { Notify } from 'vant'
 export default {
@@ -34,19 +36,23 @@ export default {
   data(){
     return{
       head:'您点过的菜',
-      foods:[],
+      foods:{},
     }
   },
   methods:{
-    buy(name){
-      console.log('进入详情页'+name);
+    toDetail(item){
+      let objStr = JSON.stringify(item);
+      this.$router.push({
+        name:'Detail',
+        params:{
+          'item':objStr,
+        }
+      });
     },
     getFoodsFromLocal(){
-      let key='ordered';
-      let foods = local.get(key);
+      let foods = local.getOrdered()
       if(foods!=null){
         this.foods =foods;
-        console.log('读取到本地数据储存');
       }else{
         this.head = '您还未点过菜哦，试试吧';
         console.log('本地未保存数据');
@@ -68,39 +74,10 @@ export default {
     notify(msg){
       Notify({ type: 'success', message: msg , duration:500});
     },
-    downloadIamge(imgsrc, name) {
-      //下载图片地址和图片名
-      var image = new Image();
-      // 解决跨域 Canvas 污染问题
-      image.setAttribute("crossOrigin", "anonymous");
-      image.onload = function() {
-        var canvas = document.createElement("canvas");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        var context = canvas.getContext("2d");
-        context.drawImage(image, 0, 0, image.width, image.height);
-        var url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
-
-        var a = document.createElement("a"); // 生成一个a元素
-        var event = new MouseEvent("click"); // 创建一个单击事件
-        a.download = name || "photo"; // 设置图片名称
-        a.href = url; // 将生成的URL设置为a.href属性
-        a.dispatchEvent(event); // 触发a的单击事件
-      };
-      image.src = imgsrc;
-    },
-    // 改downs这个函数就行，downloadIamge（‘图片下载地址’，图片名字）
-    downs(index) {
-      // 主要是为了名字不重复
-      var name = new Date().getTime();
-      this.downloadIamge(this.result[index].newImgUrl, `${name}`);
-    }
 
   },
-  mounted () {
-    console.log('获取购物车-----')
-    let cart = local.getCart();
-    console.log(cart);
+  components:{
+    'nav-button':NavButton,
   }
 
 }
