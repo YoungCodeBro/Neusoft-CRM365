@@ -1,6 +1,6 @@
 <template>
   <div id="hotFood">
-      <h2 :id="header" >{{header}}</h2>
+      <h2 :id="header" @click="clearTotalSel">{{header}}</h2>
       <van-row>
         <div>
           <van-col span="24" v-for="(item,index) in attr" :key="index"  @click="toDetail(item)">
@@ -80,6 +80,9 @@ export default {
     },
     notify(msg){
       Notify({ type: 'success', message: msg , duration:500});
+    },
+    clearTotalSel(){
+      local.clearItem('totalSel');
     }
   },
   mounted () {

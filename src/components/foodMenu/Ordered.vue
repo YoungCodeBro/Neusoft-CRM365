@@ -1,6 +1,6 @@
 <template>
   <div id="ordered">
-    <h2 v-if="getFoodsFromLocal()" >{{head}}</h2>
+    <h2 v-if="getFoodsFromLocal()"  @click="clearOrdered">{{head}}</h2>
     <van-row>
       <div>
         <van-col span="24" v-for="(item,index) in foods" :key="index">
@@ -73,7 +73,9 @@ export default {
     notify(msg){
       Notify({ type: 'success', message: msg , duration:500});
     },
-
+    clearOrdered(){
+      local.clearItem('ordered');
+    }
   },
   components:{
     'nav-button':NavButton,
