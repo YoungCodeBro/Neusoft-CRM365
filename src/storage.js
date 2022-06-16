@@ -8,6 +8,59 @@ export const local={
   remove(key){
     localStorage.removeItem(key);
   },
+  addSel(selList){
+    let totalSel = this.getTotalSel();
+    if(totalSel==null){
+      totalSel = selList;
+    }else{
+      for(let item in selList){
+        if(totalSel[item.name]!=null){
+          totalSel[item.name].count=totalSel[item.name].count+item.count;
+        }else{
+          totalSel[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img};
+        }
+      }
+    }
+    //写入本地json文件
+
+  },
+  getTotalSel(){
+    let totalSel;
+    let api="http://localhost:3003/data";
+    this.$http.jsonp(api).then(function (response) {
+      totalSel=response.data.data;
+      console.log(totalSel);
+    },function (err){
+      console.log(err);
+    })
+    return totalSel;
+  },
+  addOrdered(itemList){
+    let key = 'ordered';
+    let orderList = JSON.parse(localStorage.getItem(key));
+    if(orderList==null){
+      orderList = {};
+    }
+    for(let item in itemList){
+      if(orderList[item.name]!=null){
+        orderList[item.name].count = orderList[item.name].count+item.count;;
+      }else{
+        orderList[item.name]={name:item.name, count:item.count , price:item.price, picture:item.img};
+      }
+    }
+    console.log(orderList);
+    localStorage.setItem(key,JSON.stringify(orderList));
+    return '加入已购成功';
+  },
+  getOrdered(){
+    let key = 'ordered';
+    let ordered = JSON.parse(localStorage.getItem(key));
+    if(ordered==null){
+      ordered = {};
+    }
+    return ordered;
+  },
+
   addFoodToCart (item,count) {
     let key = 'cart';
     let cart = JSON.parse(localStorage.getItem(key));

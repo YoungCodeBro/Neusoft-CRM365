@@ -6,17 +6,17 @@
     </button>
     <div class="top">
       <img
-        :src="require('../../assets/Image/' + fid + '.jpg')"
+        :src="require('../../assets/kfcfood/'+item.img)"
         alt="菜品图片"
       />
       <div id="summary">
-        <h2>{{ foods[fid - 1].name }}</h2>
-        <span>{{ foods[fid - 1].price }}/份</span>
+        <h2>{{ item.name }}</h2>
+        <span>{{ item.price }}/份</span>
       </div>
     </div>
     <div class="middle">
       <h3>商品详情</h3>
-      <p>{{ foods[fid - 1].detail }}</p>
+      <p>{{ item.detail }}</p>
     </div>
     <div class="bottom">
       <span>数量：</span>
@@ -32,24 +32,17 @@ import { local } from "../../storage";
 export default {
   data() {
     return {
-      foods: [
-        { name: "南瓜稀饭", price: 4, detail: "南瓜稀饭" },
-        { name: "白菜豆腐", price: 4, detail: "白菜豆腐" },
-        { name: "爆炒青菜", price: 4, detail: "爆炒青菜" },
-        { name: "橘子汁", price: 4, detail: "橘子汁" },
-        { name: "包子套餐", price: 4, detail: "包子套餐" },
-        { name: "煎饼", price: 4, detail: "煎饼" },
-        { name: "红烧肉", price: 4, detail: "红烧肉" },
-      ],
       //菜品数量
       num: 1,
+      item:{
+        name:"秘汁全鸡CX",
+        price:38.9,
+        img:"100070038__ALL__S__20220531110958738.jpg",
+        count:1,
+        status:0,
+        detail:"秘汁全鸡是去内脏、去头、去颈、去爪、去尾的全鸡。"
+      },
     };
-  },
-  computed: {
-    // 菜品id
-    fid() {
-      return this.$route.params.fid;
-    },
   },
   methods: {
     backto() {
@@ -57,11 +50,10 @@ export default {
     },
     //加入购物车
     addfood() {
-      let food = this.foods[this.fid - 1];
       local.modifyCartFoodCount({
-        name: food.name,
-        price: food.price,
-        img: `${this.fid}.jpg`,
+        name: this.item.name,
+        price: this.item.price,
+        img: this.item.img,
         count:this.num
       });
     },
@@ -72,7 +64,9 @@ export default {
   },
   watch: {
     $route() {
-      let name = this.foods[this.$route.params.fid - 1].name;
+      let json = this.$route.params.item;
+      this.item = JSON.parse(json);
+      let name = this.item.name;
       let num = local.getCartFoodNum(name);
       if (num == 0) {
         num = 1;
@@ -81,7 +75,9 @@ export default {
     },
   },
   mounted() {
-    let name = this.foods[this.$route.params.fid - 1].name;
+    let json = this.$route.params.item;
+    this.item = JSON.parse(json);
+    let name = this.item.name;
     let num = local.getCartFoodNum(name);
     if (num == 0) {
       num = 1;

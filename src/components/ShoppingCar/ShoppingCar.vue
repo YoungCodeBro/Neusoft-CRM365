@@ -185,7 +185,6 @@ export default {
   width: 100%;
   height: 0.7rem;
 }
-
 /*订单详情 */
 
 .list-item {

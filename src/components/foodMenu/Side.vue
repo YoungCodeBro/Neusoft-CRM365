@@ -7,13 +7,16 @@
       </button>
     </van-sticky>
 
-    <van-popup v-model="show" position="left" :overlay="false">
-      <van-sidebar v-model="activeKey" >
-        <van-sidebar-item title="精选热菜" @click="scrollToView('精选热菜')" />
-        <van-sidebar-item title="特色菜" @click="scrollToView('特色菜')"/>
-        <van-sidebar-item title="城新小炒"  @click="scrollToView('城新小炒')"/>
-        <van-sidebar-item title="田园时蔬"  @click="scrollToView('田园时蔬')"/>
-        <van-sidebar-item title="粗粮主食"  @click="scrollToView('粗粮主食')"/>
+    <van-popup v-model="show" position="left" :overlay="false" >
+      <van-sidebar v-model="activeKey">
+        <div v-for="item in menu">
+          <van-collapse v-model="activeName" accordion v-if="item.havaChild">
+            <van-collapse-item :title="item.category" :name="item.nameCn" >
+              <van-sidebar-item  :title="child" @click="scrollToView(child)" v-for="(child,index) in item.childs" :key="index"/>
+            </van-collapse-item>
+          </van-collapse>
+          <van-sidebar-item  :title="item.nameCn" @click="scrollToView(item.nameCn)" v-if="!item.havaChild&&item.isShow" />
+        </div>
       </van-sidebar>
     </van-popup>
   </div>
@@ -27,6 +30,8 @@ export default {
       show: false,
       activeKey: 0,
       leftValue: '-1rem',
+      menu:[],
+      activeName: '1',
   }
   },
   methods: {
@@ -37,26 +42,37 @@ export default {
       }else{
         this.show = !this.show;
         if(this.leftValue==='-1rem'){
-          this.leftValue='4rem';
+          this.leftValue='6.5rem';
         }else{
           this.leftValue='-1rem';
         }
       }
     },
     scrollToView(title){
+      console.log(title);
       this.showPopup();
     //先获取目标位置距离
       let targetbox= document.getElementById(title);
       this.target= targetbox.offsetTop-80;
-      console.log(this.target);
-
     //再滑动指定距离
       window.scrollTo({
         top:this.target,
         left:0,
         behavior:"smooth"
       });
+    },
+    requestData(){
+      let api="http://localhost:3003/data";
+      this.$http.jsonp(api).then(function (response) {
+        this.menu=response.data.data;
+        console.log(this.menu)
+      },function (err){
+        console.log(err);
+      })
     }
+  },
+  mounted () {
+    this.requestData();
   }
 }
 </script>
@@ -64,24 +80,35 @@ export default {
 <style scoped>
 .van-sidebar{
   height: 100vh;
+  width: 125px;
 }
 
 >>> .van-overlay{
   background-color: rgba(255,255,0,0.1);
 }
-::v-deep [class*='van-hairline']::after{
-  border-radius: 30px;
-  border:10px solid red;
+
+>>> .van-cell{
+  background-color: #f7f8fa;
 }
->>> [class*='van-hairline']::after{
-  border-radius: 30px;
-  border:10px solid red;
+
+>>> .van-collapse-item__content{
+  padding: 0 0;
+  background-color: #f7f8fa;
 }
+>>> .van-sidebar-item {
+  line-height: 0.3rem;
+  border-bottom: 1px solid #ebedf0;
+}
+
+>>> .van-sidebar-item__text{
+  left: 0.23rem;
+}
+
 .nav{
   left: -1rem;
   position: absolute;
   top: 42%;
-  background-color: rgb(132,128,128,0.5);
+  background-color: rgba(132,128,128,0.5);
   width: 5rem;
   height: 5rem;
   text-align: center;

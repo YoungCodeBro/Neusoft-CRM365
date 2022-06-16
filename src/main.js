@@ -6,7 +6,9 @@ import router from './router'
 import Vant from 'vant'
 import 'vant/lib/index.css';
 import 'vant/lib/index.less';
+import VueResource from 'vue-resource';
 
+Vue.use(VueResource)
 Vue.use(Vant)
 
 Vue.config.productionTip = false
