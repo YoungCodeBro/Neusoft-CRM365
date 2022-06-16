@@ -37,6 +37,7 @@
     <v-button
       :text="'继续点菜'"
       :icon="require('../../assets/Image/book.png')"
+      @click.native="$router.push('/menu')"
     ></v-button>
   </div>
 </template>
